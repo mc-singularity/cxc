@@ -865,6 +865,127 @@ body {
 .doc-notes { font-size: 0.95rem; }
 
 .footer { font-size: 0.88rem; }
+        /* ============================================================
+           МОДАЛКА УЧАСТНИКА
+           ============================================================ */
+        .member-profile {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 1.5rem;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+            padding: 1.2rem;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--line);
+        }
+        @media (max-width: 40rem) {
+            .member-profile { grid-template-columns: 1fr; }
+        }
+        
+        .member-photo-block {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            align-items: center;
+        }
+        
+        .member-photo {
+            width: 100%;
+            max-width: 200px;
+            height: auto;
+            border: 2px solid var(--accent);
+            background: #000;
+            image-rendering: pixelated;
+            object-fit: contain;
+            display: block;
+        }
+        
+        .member-photo-label {
+            font-size: 0.7rem;
+            color: var(--paper-dim);
+            letter-spacing: 0.2rem;
+            font-family: 'uvKits', sans-serif !important;
+        }
+        
+        .member-details {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        
+        .member-socials {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+        
+        .member-social-link {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.6rem 0.9rem;
+            background: rgba(0, 0, 0, 0.4);
+            border-left: 2px solid var(--accent);
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        
+        .member-social-link:hover {
+            background: var(--accent-dim);
+            transform: translateX(3px);
+        }
+        
+        .social-platform {
+            font-size: 0.78rem;
+            color: var(--accent);
+            letter-spacing: 0.1rem;
+            min-width: 7rem;
+            font-family: 'uvKits', sans-serif !important;
+        }
+        
+        .social-url {
+            font-size: 0.82rem;
+            color: var(--paper);
+            opacity: 0.8;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-family: 'uvKits', sans-serif !important;
+        }
+        
+        .doc-signature {
+            margin-top: 1.5rem;
+            padding: 1.2rem 1.5rem;
+            background: rgba(158, 96, 96, 0.08);
+            border: 1px dashed var(--accent);
+            position: relative;
+        }
+        
+        .signature-label {
+            font-size: 0.7rem;
+            color: var(--paper-dim);
+            letter-spacing: 0.15rem;
+            margin-bottom: 0.4rem;
+            font-family: 'uvKits', sans-serif !important;
+        }
+        
+        .signature-value {
+            font-size: 1.4rem;
+            color: var(--accent);
+            font-family: 'uvKits', sans-serif !important;
+            font-style: italic;
+            letter-spacing: 0.05rem;
+            margin-bottom: 0.5rem;
+            transform: rotate(-2deg);
+            display: inline-block;
+        }
+        
+        .signature-line {
+            height: 1px;
+            background: var(--accent);
+            opacity: 0.5;
+            margin-top: 0.5rem;
+        }
     </style>
 </head>
 <body>
@@ -1364,18 +1485,33 @@ body {
             }
         }
         
-        function renderMember(m, isPartner = false) {
-            const avatarSrc = m.avatar || `https://minotar.net/helm/${encodeURIComponent(m.name)}/64`;
-            return `
-                <div class="member">
-                    <img src="${avatarSrc}" class="member-head" onerror="this.src='logo.jpg'" alt="${escapeHTML(m.name)}">
-                    <div class="member-info">
-                        <span class="member-name">${escapeHTML(m.name)}</span>
-                        <span class="member-role">${escapeHTML(m.role || '')}</span>
-                    </div>
-                </div>
-            `;
-        }
+  function renderMember(m, isPartner = false) {
+    // Если есть картинка (аватар) — используем её, иначе — голова скинa
+    let avatarSrc;
+    if (m.avatar && !m.avatar.startsWith('http')) {
+        // Локальный файл (например, gf.jpg)
+        avatarSrc = m.avatar;
+    } else if (m.avatar) {
+        // Внешний URL
+        avatarSrc = m.avatar;
+    } else {
+        // Fallback: голова скина
+        avatarSrc = `https://minotar.net/helm/${encodeURIComponent(m.name)}/64`;
+    }
+    
+    return `
+        <div class="member" onclick="openMember('${m.id || m.name}', ${isPartner})" style="cursor: pointer;">
+            <img src="${avatarSrc}" class="member-head" 
+                 onerror="this.src='https://minotar.net/helm/${encodeURIComponent(m.name)}/64'" 
+                 alt="${escapeHTML(m.name)}">
+            <div class="member-info">
+                <span class="member-name">${escapeHTML(m.name)}</span>
+                <span class="member-role">${escapeHTML(m.role || '')}</span>
+            </div>
+        </div>
+    `;
+}
+
         
         // ============================================================
         // МОДАЛКА: ПРОЕКТ
@@ -1661,6 +1797,178 @@ body {
             loadObjects();
             loadTeam();
         });
+    // ============================================================
+// МОДАЛКА: ЛИЧНОЕ ДЕЛО УЧАСТНИКА
+// ============================================================
+async function openMember(id, isPartner = false) {
+    // Загружаем данные команды заново (или используем кэш)
+    let team = window.cachedTeam;
+    if (!team) {
+        try {
+            const res = await fetch('data/team.json?v=' + Date.now());
+            const data = await res.json();
+            team = data.team || {};
+            window.cachedTeam = team;
+        } catch (e) {
+            console.error('Ошибка загрузки команды:', e);
+            return;
+        }
+    }
+    
+    // Ищем участника во всех категориях
+    const allMembers = [
+        ...(team.leadership || []),
+        ...(team.staff || []),
+        ...(team.members || []),
+        ...(team.partners || [])
+    ];
+    
+    const m = allMembers.find(x => (x.id || x.name) === id);
+    if (!m) return;
+    
+    // Определяем аватар
+    let avatarSrc;
+    if (m.avatar && !m.avatar.startsWith('http')) {
+        avatarSrc = m.avatar;
+    } else if (m.avatar) {
+        avatarSrc = m.avatar;
+    } else {
+        avatarSrc = `https://minotar.net/armor/bust/${encodeURIComponent(m.name)}/200`;
+    }
+    
+    // Определяем тип (сотрудник или партнёр)
+    const isOrg = isPartner || (team.partners || []).some(p => (p.id || p.name) === id);
+    const docType = isOrg ? 'КАРТОЧКА ПАРТНЁРА' : 'ЛИЧНОЕ ДЕЛО';
+    
+    let html = `
+        <div class="doc-head">
+            <div>
+                <div class="doc-title">${escapeHTML(m.name)}</div>
+                <div class="doc-subtitle">${escapeHTML(m.role || '')} · ${docType}</div>
+            </div>
+            <span class="doc-stamp">${escapeHTML(m.statusLabel || 'АКТИВЕН')}</span>
+        </div>
+        
+        <div class="member-profile">
+            <div class="member-photo-block">
+                <img src="${avatarSrc}" class="member-photo" 
+                     onerror="this.src='logo.jpg'" 
+                     alt="${escapeHTML(m.name)}">
+                <div class="member-photo-label">ФОТО</div>
+            </div>
+            
+            <div class="member-details">
+                <div class="doc-meta-grid" style="margin-bottom: 1rem;">
+                    ${m.realName ? `
+                        <div class="doc-meta-item">
+                            <div class="doc-meta-label">РЕАЛЬНОЕ ИМЯ</div>
+                            <div class="doc-meta-value">${escapeHTML(m.realName)}</div>
+                        </div>
+                    ` : ''}
+                    <div class="doc-meta-item">
+                        <div class="doc-meta-label">РОЛЬ</div>
+                        <div class="doc-meta-value">${escapeHTML(m.role || '—')}</div>
+                    </div>
+                    ${m.joinedDate ? `
+                        <div class="doc-meta-item">
+                            <div class="doc-meta-label">ДАТА ПРИЁМА</div>
+                            <div class="doc-meta-value">${escapeHTML(m.joinedDate)}</div>
+                        </div>
+                    ` : ''}
+                    ${m.period ? `
+                        <div class="doc-meta-item">
+                            <div class="doc-meta-label">ПЕРИОД РАБОТЫ</div>
+                            <div class="doc-meta-value">${escapeHTML(m.period)}</div>
+                        </div>
+                    ` : ''}
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Организация
+    if (m.organization || (m.additionalOrgs && m.additionalOrgs.length > 0)) {
+        html += `
+            <div class="doc-section">
+                <div class="doc-section-title">ОРГАНИЗАЦИИ</div>
+                <div class="doc-list">
+                    ${m.organization ? `
+                        <div class="doc-list-item">
+                            <strong>ОСНОВНАЯ</strong>
+                            ${escapeHTML(m.organization)}
+                        </div>
+                    ` : ''}
+                    ${(m.additionalOrgs || []).map(org => `
+                        <div class="doc-list-item">
+                            <strong>ДОПОЛНИТЕЛЬНО</strong>
+                            ${escapeHTML(org)}
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+    }
+    
+    // Биография
+    if (m.biography) {
+        html += `
+            <div class="doc-section">
+                <div class="doc-section-title">БИОГРАФИЯ</div>
+                <div class="doc-section-text">${escapeHTML(m.biography)}</div>
+            </div>
+        `;
+    }
+    
+    // Заметка
+    if (m.note) {
+        html += `
+            <div class="doc-section">
+                <div class="doc-section-title">ПРИМЕЧАНИЕ</div>
+                <div class="doc-notes">${escapeHTML(m.note)}</div>
+            </div>
+        `;
+    }
+    
+    // Ссылки
+    if (m.socials && m.socials.length > 0) {
+        html += `
+            <div class="doc-section">
+                <div class="doc-section-title">ССЫЛКИ</div>
+                <div class="member-socials">
+                    ${m.socials.map(s => `
+                        <a href="${escapeHTML(s.url)}" target="_blank" rel="noopener" class="member-social-link">
+                            <span class="social-platform">${escapeHTML(s.platform)}</span>
+                            <span class="social-url">${escapeHTML(s.url)}</span>
+                        </a>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+    }
+    
+    // Подпись — кто принял
+    if (m.acceptedBy && m.acceptedBy !== '—') {
+        html += `
+            <div class="doc-signature">
+                <div class="signature-label">ПРИНЯТ(А) В КОМПАНИЮ:</div>
+                <div class="signature-value">${escapeHTML(m.acceptedBy)}</div>
+                <div class="signature-line"></div>
+            </div>
+        `;
+    }
+    
+    // Подпись директора (для всех)
+    html += `
+        <div class="doc-signature">
+            <div class="signature-label">ПОДПИСЬ ГЕНЕРАЛЬНОГО ДИРЕКТОРА:</div>
+            <div class="signature-value">Folksy13_dll</div>
+            <div class="signature-line"></div>
+        </div>
+    `;
+    
+    document.getElementById('modalBody').innerHTML = html;
+    document.getElementById('docModal').classList.add('show');
+}
     </script>
 </body>
 </html>
