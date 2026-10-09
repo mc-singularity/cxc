@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Суньхуньсяй Inc. — Официальный портал компании</title>
+    <meta name="description" content="Суньхуньсяй Inc. — торгово-исследовательская и активистская компания на сервере Singularity. Услуги, объекты, история.">
+    
+    <link rel="icon" type="image/jpg" href="logo.jpg">
+    <meta name="theme-color" content="#9e6060">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Суньхуньсяй Inc. — Официальный портал">
+    <meta property="og:description" content="Торгово-исследовательская и активистская компания на сервере Singularity.">
+    <meta property="og:image" content="logo.jpg">
+    <meta property="og:locale" content="ru_RU">
+    
+    <style>
+        :root {
+            --accent-color: #9e6060;
+            --accent-dim: rgba(158, 96, 96, 0.15);
+            --accent-hover: rgba(158, 96, 96, 0.3);
+            --accent-shadow: rgba(158, 96, 96, 0.5);
+            --paper-color: #d9d4d4;
+            --bg-color: #0a0a0a;
+            
+            --btn-border-w: 0.1875rem;
+            --btn-border-w-sm: 0.125rem;
+            --btn-radius: 0px;
+            --btn-shadow: 0.1875rem 0.1875rem 0 rgba(0, 0, 0, 0.6);
+            --btn-shadow-sm: 0.125rem 0.125rem 0 rgba(0, 0, 0, 0.6);
+            --btn-transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+            --btn-letter-spacing: 0.03em;
+            --btn-bg: rgba(0, 0, 0, 0.75);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        @font-face {
+            font-family: 'uvKits';
+            src: url('uvKits.ttf') format('truetype');
+            font-display: swap;
+        }
+        
+        body {
+            font-family: 'uvKits', sans-serif;
+            color: #ffffff;
+            background: var(--bg-color);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        
+        /* ===== ФОНОВЫЕ СЛОИ ===== */
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('background.png');
+            background-size: cover;
+            background-position: center;
+            z-index: -2;
+            image-rendering: pixelated;
+        }
+        .background::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle, rgba(10, 10, 10, 0.7) 0%, rgba(10, 10, 10, 0.95) 100%);
+        }
+        
+        /* ===== КОНТЕЙНЕР ===== */
+        .container {
+            max-width: 70rem;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* ===== ШАПКА САЙТА ===== */
+        .site-header {
+            padding: 3rem 0 2rem;
+            text-align: center;
+            border-bottom: 3px double var(--accent-color);
+            margin-bottom: 2rem;
+        }
+        .site-logo {
+            max-width: 10rem;
+            height: auto;
+            margin-bottom: 1rem;
+            image-rendering: pixelated;
+            filter: drop-shadow(3px 3px 0 rgba(0, 0, 0, 0.8));
+        }
+        .site-title {
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            color: var(--accent-color);
+            letter-spacing: 0.15rem;
+            text-shadow: 3px 3px 0 #000, -1px 0 #ff0055, 1px 0 #00ffff;
+            margin-bottom: 0.5rem;
+            font-family: 'uvKits', sans-serif !important;
+        }
+        .site-subtitle {
+            font-size: clamp(0.9rem, 2vw, 1.2rem);
+            color: var(--paper-color);
+            letter-spacing: 0.08rem;
+            opacity: 0.85;
+            font-family: 'uvKits', sans-serif !important;
+        }
+        .site-meta {
+            font-size: 0.8rem;
+            color: #888;
+            margin-top: 1rem;
+            font-family: 'uvKits', sans-serif !important;
+        }
+        
+        /* ===== СЕКЦИИ (ДЕЛА) ===== */
+        .section {
+            background: rgba(15, 15, 18, 0.92);
+            border: 2px solid var(--accent-color);
+            padding: 0;
+            margin: 2rem 0;
+            position: relative;
+            box-shadow: 0 0 20px rgba(158, 96, 96, 0.15), 4px 4px 0 rgba(0, 0, 0, 0.6);
+        }
+        
+        /* Шапка документа */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.6rem 1.2rem;
+            background: rgba(158, 96, 96, 0.15);
+            border-bottom: 2px solid var(--accent-color);
+            font-size: 0.75rem;
+            letter-spacing: 0.1rem;
+            color: var(--accent-color);
+            font-family: 'uvKits', sans-serif !important;
+        }
+        .section-header .doc-id {
+            opacity: 0.8;
+        }
+        .section-header .doc-stamp {
+            background: var(--accent-color);
+            color: #000;
+            padding: 2px 8px;
+            font-weight: bold;
+            font-size: 0.65rem;
+            letter-spacing: 0.15rem;
+        }
+        
+        .section-body {
+            padding: 1.8rem 2rem;
+        }
+        
+        .section-title {
+            font-size: clamp(1.3rem, 4vw, 2rem);
+            color: var(--accent-color);
+            letter-spacing: 0.1rem;
+            margin-bottom: 1.2rem;
+            text-shadow: 2px 2px 0 #000;
+            font-family: 'uvKits', sans-serif !important;
+            border-bottom: 1px dashed var(--accent-dim);
+            padding-bottom: 0.6rem;
+        }
+        
+        .section p {
+            color: var(--paper-color);
+            margin-bottom: 0.8rem;
+            font-size: 0.95rem;
+        }
+        
+        /* ===== ПРАВИЛА / ПРИНЦИПЫ ===== */
+        .principles {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.7rem;
+        }
+        .principles li {
+            color: var(--paper-color);
+            padding-left: 1.5rem;
+            position: relative;
+            font-size: 0.95rem;
+        }
+        .principles li::before {
+            content: '▪';
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+            font-size: 1.2rem;
+            line-height: 1;
+        }
+        
+        /* ===== УСЛУГИ / КАРТОЧКИ ===== */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+            gap: 1rem;
+        }
+        .card {
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid var(--accent-color);
+            padding: 1.2rem;
+            transition: all 0.2s ease;
+        }
+        .card:hover {
+            background: rgba(158, 96, 96, 0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 0 15px var(--accent-shadow);
+        }
+        .card-title {
+            color: var(--accent-color);
+            font-size: 1.1rem;
+            margin-bottom: 0.6rem;
+            letter-spacing: 0.05rem;
+            font-family: 'uvKits', sans-serif !important;
+        }
+        .card-text {
+            color: var(--paper-color);
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+        
+        /* ===== ТАЙМЛАЙН ИСТОРИИ ===== */
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            position: relative;
+            padding-left: 2rem;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0.5rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--accent-color);
+            opacity: 0.5;
+        }
+        .timeline-item {
+            position: relative;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2rem;
+            top: 0.5rem;
+            width: 0.9rem;
+            height: 0.9rem;
+            background: var(--accent-color);
+            border: 2px solid #000;
+            transform: rotate(45deg);
+        }
+        .timeline-item-title {
+            color: var(--accent-color);
+            font-size: 1.1rem;
+            margin-bottom: 0.4rem;
+            letter-spacing: 0.08rem;
+            font-family: 'uvKits', sans-serif !important;
+        }
+        .timeline-item-text {
+            color: var(--paper-color);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        
+        /* ===== ПАСПОРТ ОБЪЕКТА ===== */
+        .object-card {
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid var(--accent-color);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .object-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px dashed var(--accent-dim);
+        }
+        .object-icon {
+            width: 3.5rem;
+            height: 3.5rem;
+            border: 2px solid var(--accent-color);
+            background: #000;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+        .object-title-block {
+            flex: 1;
+        }
+        .object-name {
+            color: var(--accent-color);
+            font-size: 1.3rem;
+            margin-bottom: 0.2rem;
+            font-family: 'uvKits', sans-serif !important;
+        }
+        .object-type {
+            color: #888;
+            font-size: 0.8rem;
+            letter-spacing: 0.05rem;
+            font-family: 'uvKits', sans-serif !important;
+        }
+        .object-status {
+            background: #ffaa00;
+            color: #000;
+            padding: 3px 10px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            letter-spacing: 0.1rem;
+            font-family: 'uvKits', sans-serif !important;
+        }
+        .object-status.active { background: #55ff55; }
+        .object-status.construction { background: #ffaa00; }
+        .object-status.closed { background: #ff5555; }
+        
+        .object-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem 1.5rem;
+            margin-bottom: 1rem;
+            font-size: 0.8rem;
+            color: #aaa;
+            font-family: 'uvKits', sans-serif !important;
+        }
+        .object-meta strong {
+            color: var(--accent-color);
+        }
+        
+        /* ===== ОРГАНИЗАЦИИ ===== */
+        .organizations {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .org-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.8rem 1rem;
+            background: rgba(0, 0, 0, 0.4);
+            border-left: 4px solid var(--accent-color);
+        }
+        .org-name {
+            color: var(--accent-color);
+            font-size: 1rem;
+            min-width: 10rem;
+            font-family: 'uvKits', sans-serif !important;
+        }
+        .org-status {
+            color: var(--paper-color);
+            font-size: 0.85rem;
+        }
+        
+        /* ===== КОНТАКТЫ ===== */
+        .contacts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+            gap: 1rem;
+        }
+        .contact-card {
+            text-align: center;
+            padding: 1.2rem;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid var(--accent-color);
+            text-decoration: none;
+            color: var(--paper-color);
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+        .contact-card:hover {
+            background: rgba(158, 96, 96, 0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 0 15px var(--accent-shadow);
+        }
+        .contact-label {
+            font-size: 0.7rem;
+            color: #888;
+            letter-spacing: 0.1rem;
+            font-family: 'uvKits', sans-serif !important;
+        }
+        .contact-value {
+            font-size: 1rem;
+            color: var(--accent-color);
+            font-family: 'uvKits', sans-serif !important;
+        }
+        
+        /* ===== КНОПКИ ===== */
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.8rem 2rem;
+            background: var(--accent-color);
+            color: #000;
+            border: var(--btn-border-w) solid #000;
+            font-size: 1rem;
+            letter-spacing: var(--btn-letter-spacing);
+            text-decoration: none;
+            cursor: pointer;
+            box-shadow: var(--btn-shadow);
+            transition: var(--btn-transition);
+            font-family: 'uvKits', sans-serif !important;
+            font-weight: bold;
+        }
+        .button:hover {
+            background: #000;
+            color: var(--accent-color);
+            border-color: var(--accent-color);
+            box-shadow: 0 0 15px var(--accent-shadow);
+        }
+        
+        /* ===== ФУТЕР ===== */
+        .site-footer {
+            text-align: center;
+            padding: 3rem 0 2rem;
+            margin-top: 3rem;
+            border-top: 3px double var(--accent-color);
+            color: #888;
+            font-size: 0.8rem;
+            letter-spacing: 0.08rem;
+            font-family: 'uvKits', sans-serif !important;
+        }
+        .site-footer .highlight {
+            color: var(--accent-color);
+        }
+        
+        /* ===== АДАПТИВ ===== */
+        @media (max-width: 48rem) {
+            .container { padding: 0 1rem; }
+            .site-header { padding: 2rem 0 1.5rem; }
+            .section-body { padding: 1.2rem 1.2rem; }
+            .section-header { padding: 0.5rem 0.9rem; font-size: 0.7rem; }
+            .object-header { flex-direction: column; text-align: center; }
+            .org-row { flex-direction: column; align-items: flex-start; gap: 0.3rem; }
+            .org-name { min-width: auto; }
+        }
+        
+        /* ===== ПАСХАЛКА (скрытая) ===== */
+        .easter-hint {
+            font-size: 0.7rem;
+            color: #333;
+            text-align: center;
+            margin-top: 2rem;
+            cursor: default;
+            user-select: none;
+            transition: color 0.5s ease;
+        }
+        .easter-hint.revealed {
+            color: var(--accent-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    
+    <div class="container">
+        
+        <!-- ===== ШАПКА ===== -->
+        <header class="site-header">
+            <img src="logo.jpg" alt="Суньхуньсяй Inc." class="site-logo" onerror="this.style.display='none'">
+            <h1 class="site-title" id="siteTitle">СУНЬХУНЬСЯЙ INC.</h1>
+            <p class="site-subtitle">Торгово-исследовательская и активистская компания</p>
+            <div class="site-meta">Основано: 0 сезон · Singularity · 2026</div>
+        </header>
+        
+        <!-- ===== О КОМПАНИИ ===== -->
+        <section class="section" data-doc-id="ДОКУМЕНТ №1">
+            <div class="section-header">
+                <span class="doc-id">ДОКУМЕНТ №1 · О КОМПАНИИ</span>
+                <span class="doc-stamp">ПОДЛИННО</span>
+            </div>
+            <div class="section-body">
+                <h2 class="section-title">О КОМПАНИИ</h2>
+                <p>
+                    Суньхуньсяй Inc. — торгово-исследовательская и активистская компания, 
+                    действующая на территории сервера Singularity. Наша история уходит корнями 
+                    в нулевой сезон, когда мы впервые вышли на публичное поле в статусе 
+                    организованной структуры.
+                </p>
+                <p>
+                    Мы занимаемся исследованиями, торговлей, развитием инфраструктуры и 
+                    поддержкой сообщества. Наша цель — объединять людей, желающих исследовать 
+                    мир и помогать друг другу, а не замыкаться исключительно на собственных кадрах.
+                </p>
+            </div>
+        </section>
+        
+        <!-- ===== ПРИНЦИПЫ ===== -->
+        <section class="section">
+            <div class="section-header">
+                <span class="doc-id">ДОКУМЕНТ №2 · ПРИНЦИПЫ</span>
+                <span class="doc-stamp">УТВЕРЖДЕНО</span>
+            </div>
+            <div class="section-body">
+                <h2 class="section-title">НАШИ ПРИНЦИПЫ</h2>
+                <ul class="principles">
+                    <li>Мы являемся убежденными противниками монополий</li>
+                    <li>Любые найденные нами рецепты или механики мы готовы продавать за символическую цену, чтобы ими мог пользоваться каждый</li>
+                    <li>При использовании наших лицензий и находок в коммерческих целях необходимо указывать Суньхуньсяй Inc. в качестве первоисточника</li>
+                    <li>Мы открыты для сотрудничества и новых участников</li>
+                </ul>
+            </div>
+        </section>
+        
+        <!-- ===== ИСТОРИЯ ===== -->
+        <section class="section">
+            <div class="section-header">
+                <span class="doc-id">ДОКУМЕНТ №3 · АРХИВ</span>
+                <span class="doc-stamp">АРХИВ</span>
+            </div>
+            <div class="section-body">
+                <h2 class="section-title">НАША ИСТОРИЯ</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-item-title">0 СЕЗОН · ОСНОВАНИЕ</div>
+                        <div class="timeline-item-text">
+                            Перестройка торговой точки. Появление бесплатных жилых зон для новичков. 
+                            Возведение защитного забора вокруг аномальной зоны на спавне — первый 
+                            подобный проект на сервере.
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-item-title">1 СЕЗОН · РАЗВИТИЕ</div>
+                        <div class="timeline-item-text">
+                            Продолжение поддержки новичков. Расширение инфраструктуры. 
+                            Укрепление позиций компании как надёжного партнёра и соседа.
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-item-title">2 СЕЗОН · ПУБЛИЧНЫЙ ВЫХОД</div>
+                        <div class="timeline-item-text">
+                            Создание Telegram-канала. Первый публичный выход в статусе 
+                            организованной структуры. Открытие торговли, приём заказов, 
+                            набор сотрудников. Начало реконструкции базы в многофункциональный комплекс.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- ===== ЧЕМ ЗАНИМАЕМСЯ ===== -->
+        <section class="section">
+            <div class="section-header">
+                <span class="doc-id">ДОКУМЕНТ №4 · ДЕЯТЕЛЬНОСТЬ</span>
+                <span class="doc-stamp">АКТИВНО</span>
+            </div>
+            <div class="section-body">
+                <h2 class="section-title">ЧЕМ МЫ ЗАНИМАЕМСЯ</h2>
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-title">СТРОИТЕЛЬСТВО</div>
+                        <div class="card-text">Возведение объектов под заказ: жилые комплексы, торговые точки, инфраструктура.</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">ТОРГОВЛЯ</div>
+                        <div class="card-text">Приём заказов на материалы и ресурсы. Предоставление полок для продажи вашей продукции.</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">ИССЛЕДОВАНИЯ</div>
+                        <div class="card-text">Изучение аномальных зон и механик сервера. Распространение знаний за символическую цену.</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">ПОДДЕРЖКА НОВИЧКОВ</div>
+                        <div class="card-text">Бесплатное жильё и помощь на старте. Интеграция новых игроков в сообщество.</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">ЛОГИСТИКА</div>
+                        <div class="card-text">Доставка ресурсов и товаров на указанные координаты. Первый сезонный заказ успешно выполнен.</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">ТРЕЙДХОЛЛ</div>
+                        <div class="card-text">Покупка зачарований у жителей, прямая покупка чар за алмазы (скоро).</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- ===== ОБЪЕКТЫ ===== -->
+        <section class="section">
+            <div class="section-header">
+                <span class="doc-id">ДОКУМЕНТ №5 · РЕЕСТР ОБЪЕКТОВ</span>
+                <span class="doc-stamp">АКТУАЛЬНО</span>
+            </div>
+            <div class="section-body">
+                <h2 class="section-title">НАШИ ОБЪЕКТЫ</h2>
+                <div class="object-card">
+                    <div class="object-header">
+                        <img src="logo.jpg" alt="Объект" class="object-icon" onerror="this.style.display='none'">
+                        <div class="object-title-block">
+                            <div class="object-name">МФК «Юньтай»</div>
+                            <div class="object-type">Многофункциональный комплекс</div>
+                        </div>
+                        <span class="object-status construction">РЕКОНСТРУКЦИЯ</span>
+                    </div>
+                    <div class="object-meta">
+                        <span><strong>Ответственное лицо:</strong> Folksy13_dll</span>
+                        <span><strong>Координаты:</strong> Засекречено</span>
+                        <span><strong>Начало работ:</strong> 2026</span>
+                    </div>
+                    <p>
+                        Реконструкция временной базы в многофункциональный комплекс Суньхуньсяй Inc.
+                        Включает трейдхолл, торговую зону и обновлённый жилой комплекс.
+                    </p>
+                    <p style="color: #888; font-size: 0.85rem; margin-top: 0.8rem;">
+                        <strong style="color: var(--accent-color);">Структура:</strong>
+                        Трейдхолл · Торговая зона · Жилая зона
+                    </p>
+                </div>
+                
+                <div class="object-card">
+                    <div class="object-header">
+                        <img src="logo.jpg" alt="Объект" class="object-icon" onerror="this.style.display='none'">
+                        <div class="object-title-block">
+                            <div class="object-name">Основная точка на спавне</div>
+                            <div class="object-type">Торгово-представительский центр</div>
+                        </div>
+                        <span class="object-status active">ПЛАНИРУЕТСЯ</span>
+                    </div>
+                    <div class="object-meta">
+                        <span><strong>Ответственное лицо:</strong> Folksy13_dll</span>
+                        <span><strong>Координаты:</strong> Зарезервировано</span>
+                        <span><strong>Статус:</strong> Место зарезервировано</span>
+                    </div>
+                    <p>
+                        Основная точка компании, расположенная на спавне. Место уже зарезервировано,
+                        строительство начнётся в ближайшее время. Здесь будет главный офис и
+                        торговая площадка Суньхуньсяй Inc.
+                    </p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- ===== ОТНОШЕНИЯ ===== -->
+        <section class="section">
+            <div class="section-header">
+                <span class="doc-id">ДОКУМЕНТ №6 · ДИПЛОМАТИЯ</span>
+                <span class="doc-stamp">ОТКРЫТО</span>
+            </div>
+            <div class="section-body">
+                <h2 class="section-title">ОТНОШЕНИЯ С ОРГАНИЗАЦИЯМИ</h2>
+                <div class="organizations">
+                    <div class="org-row">
+                        <div class="org-name">Griffin Corp</div>
+                        <div class="org-status">Тёплые отношения. Наш генеральный директор одновременно является сотрудником корпорации.</div>
+                    </div>
+                    <div class="org-row">
+                        <div class="org-name">Уроборос</div>
+                        <div class="org-status">Нейтрально-хорошие отношения. Поддерживаем дружеские контакты.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- ===== НАБОР И ТОРГОВЛЯ ===== -->
+        <section class="section">
+            <div class="section-header">
+                <span class="doc-id">ДОКУМЕНТ №7 · СОТРУДНИЧЕСТВО</span>
+                <span class="doc-stamp">ОТКРЫТО</span>
+            </div>
+            <div class="section-body">
+                <h2 class="section-title">НАБОР СОТРУДНИКОВ И ТОРГОВЛЯ</h2>
+                <p>
+                    Мы объявляем о наборе и будем рады пополнить наши ряды. Для работы на должностях 
+                    обычных сотрудников <strong style="color: var(--accent-color);">совершенно необязательно выходить из другой организации</strong>, 
+                    если вы уже где-то состоите.
+                </p>
+                <p>
+                    Мы открыты для торговых переговоров, готовы принимать заказы по материалам и 
+                    прочим ресурсам, а также предоставить полки наших магазинов для продажи вашей продукции.
+                </p>
+                <div style="text-align: center; margin-top: 1.5rem;">
+                    <a href="https://t.me/CXCInc" target="_blank" class="button">СВЯЗАТЬСЯ С НАМИ</a>
+                </div>
+            </div>
+        </section>
+        
+        <!-- ===== КОНТАКТЫ ===== -->
+        <section class="section">
+            <div class="section-header">
+                <span class="doc-id">ДОКУМЕНТ №8 · КОНТАКТЫ</span>
+                <span class="doc-stamp">ОТКРЫТО</span>
+            </div>
+            <div class="section-body">
+                <h2 class="section-title">КОНТАКТЫ</h2>
+                <div class="contacts-grid">
+                    <a href="https://t.me/CXCInc" target="_blank" class="contact-card">
+                        <div class="contact-label">TELEGRAM-КАНАЛ</div>
+                        <div class="contact-value">@CXCInc</div>
+                    </a>
+                    <a href="https://t.me/singularity_sl" target="_blank" class="contact-card">
+                        <div class="contact-label">TELEGRAM СЕРВЕРА</div>
+                        <div class="contact-value">@singularity_sl</div>
+                    </a>
+                    <a href="https://discord.gg/fnzjSWf88p" target="_blank" class="contact-card">
+                        <div class="contact-label">DISCORD</div>
+                        <div class="contact-value">Singularity</div>
+                    </a>
+                </div>
+            </div>
+        </section>
+        
+        <!-- ===== ПАСХАЛКА (скрытая) ===== -->
+        <div class="easter-hint" id="easterHint">· · ·</div>
+        
+        <!-- ===== ФУТЕР ===== -->
+        <footer class="site-footer">
+            <p>
+                <span class="highlight">СУНЬХУНЬСЯЙ INC.</span> · Торгово-исследовательская и активистская компания
+            </p>
+            <p style="margin-top: 0.5rem;">
+                𖣯 Все актуальные сведения всегда можно найти в архивах Суньхуньсяй Inc | CXC 2026
+            </p>
+        </footer>
+        
+    </div>
+    
+    <script>
+        // ============================================================
+        // ПАСХАЛКА — 7 кликов по логотипу
+        // ============================================================
+        (function setupEasterEgg() {
+            let clicks = 0;
+            let timer = null;
+            const hint = document.getElementById('easterHint');
+            const logo = document.querySelector('.site-logo');
+            
+            if (!logo) return;
+            
+            logo.style.cursor = 'pointer';
+            
+            logo.addEventListener('click', () => {
+                clicks++;
+                clearTimeout(timer);
+                
+                if (clicks >= 7) {
+                    clicks = 0;
+                    if (hint) {
+                        hint.textContent = '· 所有狗都会被吃掉 ·';
+                        hint.classList.add('revealed');
+                        setTimeout(() => {
+                            hint.classList.remove('revealed');
+                            setTimeout(() => {
+                                hint.textContent = '· · ·';
+                            }, 500);
+                        }, 5000);
+                    }
+                } else {
+                    timer = setTimeout(() => { clicks = 0; }, 800);
+                }
+            });
+        })();
+        
+        // ============================================================
+        // ПЛАВНОЕ ПОЯВЛЕНИЕ СЕКЦИЙ
+        // ============================================================
+        (function initReveal() {
+            const sections = document.querySelectorAll('.section');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            sections.forEach(section => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(20px)';
+                section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(section);
+            });
+        })();
+    </script>
+</body>
+</html>
