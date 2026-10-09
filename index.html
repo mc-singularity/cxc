@@ -46,12 +46,7 @@
         }
         
         /* ===== ФОН ===== */
-        .bg-layer {
-            position: fixed;
-            inset: 0;
-            z-index: -1;
-            pointer-events: none;
-        }
+        .bg-layer { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
         .bg-layer.grid {
             background-image: 
                 linear-gradient(rgba(158, 96, 96, 0.04) 1px, transparent 1px),
@@ -86,9 +81,7 @@
             justify-content: space-between;
             gap: 2rem;
         }
-        @media (max-width: 48rem) {
-            .header-inner { padding: 0.7rem 1rem; }
-        }
+        @media (max-width: 48rem) { .header-inner { padding: 0.7rem 1rem; } }
         
         .brand {
             display: flex;
@@ -122,7 +115,7 @@
             font-family: 'uvKits', sans-serif !important;
         }
         
-        /* ===== НАВИГАЦИЯ (ТАБЫ) ===== */
+        /* ===== НАВИГАЦИЯ ===== */
         .nav {
             display: flex;
             gap: 0.3rem;
@@ -142,18 +135,9 @@
             font-family: 'uvKits', sans-serif !important;
             white-space: nowrap;
         }
-        .nav-btn:hover {
-            color: var(--accent);
-            border-color: var(--accent-dim);
-        }
-        .nav-btn.active {
-            color: #fff;
-            background: var(--accent);
-            border-color: var(--accent);
-        }
-        @media (max-width: 62rem) {
-            .nav-btn { padding: 0.4rem 0.7rem; font-size: 0.7rem; }
-        }
+        .nav-btn:hover { color: var(--accent); border-color: var(--accent-dim); }
+        .nav-btn.active { color: #fff; background: var(--accent); border-color: var(--accent); }
+        @media (max-width: 62rem) { .nav-btn { padding: 0.4rem 0.7rem; font-size: 0.7rem; } }
         
         .status-dot {
             display: flex;
@@ -174,10 +158,7 @@
             box-shadow: 0 0 8px #55ff55;
             animation: pulse 2s infinite;
         }
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
         @media (max-width: 62rem) { .status-dot { display: none; } }
         
         /* ===== КОНТЕЙНЕР ===== */
@@ -188,7 +169,7 @@
         }
         @media (max-width: 48rem) { .wrap { padding: 0 1rem; } }
         
-        /* ===== ВКЛАДКИ (КОНТЕНТ) ===== */
+        /* ===== ВКЛАДКИ ===== */
         .tab-content {
             display: none;
             padding: 2.5rem 0 3rem;
@@ -200,7 +181,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
-        /* ===== HERO (КОМПАКТНЫЙ) ===== */
+        /* ===== HERO ===== */
         .hero {
             padding: 3rem 2rem;
             background: linear-gradient(135deg, rgba(158, 96, 96, 0.12) 0%, transparent 100%);
@@ -226,10 +207,7 @@
             margin-bottom: 1rem;
             font-family: 'uvKits', sans-serif !important;
         }
-        .hero-title .accent {
-            color: var(--accent);
-            display: block;
-        }
+        .hero-title .accent { color: var(--accent); display: block; }
         .hero-desc {
             font-size: 0.95rem;
             color: var(--paper);
@@ -238,7 +216,7 @@
             opacity: 0.9;
         }
         
-        /* ===== БЫСТРЫЕ ФАКТЫ ===== */
+        /* ===== ФАКТЫ ===== */
         .facts {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
@@ -264,9 +242,7 @@
         }
         
         /* ===== СЕКЦИИ ===== */
-        .section {
-            margin-bottom: 3rem;
-        }
+        .section { margin-bottom: 3rem; }
         .section-head {
             display: flex;
             align-items: baseline;
@@ -321,66 +297,70 @@
             line-height: 1.6;
             transition: all 0.2s ease;
         }
-        .principle:hover {
-            background: var(--accent-dim);
-            transform: translateX(3px);
-        }
+        .principle:hover { background: var(--accent-dim); transform: translateX(3px); }
         
-        /* ===== ПРОЕКТЫ ===== */
-        .projects-grid {
+        /* ===== КАРТОЧКИ ===== */
+        .cards-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
             gap: 1rem;
         }
-        .project {
+        .card {
             background: rgba(0, 0, 0, 0.5);
             border: 1px solid var(--line);
             border-top: 3px solid var(--accent);
             padding: 1.3rem;
             transition: all 0.25s ease;
-            position: relative;
             cursor: pointer;
+            position: relative;
         }
-        .project:hover {
+        .card:hover {
             border-color: var(--accent);
             transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
         }
-        .project-head {
+        .card-head {
             display: flex;
             align-items: flex-start;
             justify-content: space-between;
             gap: 0.8rem;
             margin-bottom: 0.7rem;
         }
-        .project-title {
+        .card-title {
             font-size: 1rem;
             color: var(--accent);
             letter-spacing: 0.05rem;
             font-family: 'uvKits', sans-serif !important;
         }
-        .project-badge {
+        .card-subtitle {
+            font-size: 0.72rem;
+            color: var(--paper-dim);
+            letter-spacing: 0.08rem;
+            margin-top: 0.15rem;
+            font-family: 'uvKits', sans-serif !important;
+        }
+        .card-badge {
             font-size: 0.6rem;
             padding: 0.2rem 0.5rem;
-            background: var(--accent);
-            color: #000;
             letter-spacing: 0.1rem;
             flex-shrink: 0;
             font-family: 'uvKits', sans-serif !important;
             font-weight: bold;
         }
-        .project-badge.active { background: #55ff55; }
-        .project-badge.ongoing { background: #ffaa00; }
-        .project-badge.planned { background: var(--accent); }
-        .project-badge.done { background: #666; color: #ccc; }
-        .project-desc {
+        .card-badge.active { background: #55ff55; color: #000; }
+        .card-badge.ongoing { background: #ffaa00; color: #000; }
+        .card-badge.planned { background: var(--accent); color: #000; }
+        .card-badge.done { background: #666; color: #ccc; }
+        .card-badge.construction { background: #ffaa00; color: #000; }
+        
+        .card-desc {
             font-size: 0.83rem;
             color: var(--paper);
             line-height: 1.6;
             opacity: 0.85;
             margin-bottom: 0.8rem;
         }
-        .project-meta {
+        .card-meta {
             display: flex;
             flex-wrap: wrap;
             gap: 0.3rem 1rem;
@@ -390,7 +370,17 @@
             border-top: 1px dashed var(--line);
             font-family: 'uvKits', sans-serif !important;
         }
-        .project-meta strong { color: var(--accent); font-weight: normal; }
+        .card-meta strong { color: var(--accent); font-weight: normal; }
+        .card-hint {
+            font-size: 0.7rem;
+            color: var(--accent);
+            letter-spacing: 0.1rem;
+            margin-top: 0.8rem;
+            font-family: 'uvKits', sans-serif !important;
+            opacity: 0.7;
+            transition: opacity 0.2s ease;
+        }
+        .card:hover .card-hint { opacity: 1; }
         
         /* ===== АККОРДЕОН ===== */
         .accordion {
@@ -407,9 +397,7 @@
             transition: background 0.2s ease;
             user-select: none;
         }
-        .accordion-head:hover {
-            background: var(--accent-dim);
-        }
+        .accordion-head:hover { background: var(--accent-dim); }
         .accordion-title {
             font-size: 0.92rem;
             color: var(--accent);
@@ -425,9 +413,7 @@
             display: inline-block;
             color: var(--accent);
         }
-        .accordion.open .accordion-title::before {
-            transform: rotate(90deg);
-        }
+        .accordion.open .accordion-title::before { transform: rotate(90deg); }
         .accordion-count {
             font-size: 0.7rem;
             color: var(--paper-dim);
@@ -441,9 +427,7 @@
             overflow: hidden;
             transition: max-height 0.4s ease;
         }
-        .accordion.open .accordion-body {
-            max-height: 3000px;
-        }
+        .accordion.open .accordion-body { max-height: 3000px; }
         .accordion-inner {
             padding: 1rem 1.2rem 1.2rem;
             border-top: 1px solid var(--line);
@@ -464,10 +448,7 @@
             border-left: 2px solid var(--accent);
             transition: all 0.2s ease;
         }
-        .member:hover {
-            background: var(--accent-dim);
-            transform: translateX(3px);
-        }
+        .member:hover { background: var(--accent-dim); transform: translateX(3px); }
         .member-head {
             width: 2.5rem;
             height: 2.5rem;
@@ -476,12 +457,7 @@
             image-rendering: pixelated;
             flex-shrink: 0;
         }
-        .member-info {
-            display: flex;
-            flex-direction: column;
-            line-height: 1.25;
-            overflow: hidden;
-        }
+        .member-info { display: flex; flex-direction: column; line-height: 1.25; overflow: hidden; }
         .member-name {
             font-size: 0.88rem;
             color: #fff;
@@ -498,89 +474,28 @@
             font-family: 'uvKits', sans-serif !important;
         }
         
-        /* ===== ОБЪЕКТЫ ===== */
-        .objects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
-            gap: 1rem;
+        /* ===== ПРИСОЕДИНИТЬСЯ ===== */
+        .join-block {
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(158, 96, 96, 0.12) 0%, transparent 100%);
+            border: 1px solid var(--accent);
+            text-align: center;
+            margin-top: 2rem;
         }
-        .object {
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid var(--line);
-            padding: 1.3rem;
-        }
-        .object-head {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 0.8rem;
-            margin-bottom: 0.9rem;
-            padding-bottom: 0.8rem;
-            border-bottom: 1px dashed var(--line);
-        }
-        .object-name {
-            font-size: 1rem;
-            color: var(--accent);
-            margin-bottom: 0.15rem;
-            font-family: 'uvKits', sans-serif !important;
-        }
-        .object-type {
-            font-size: 0.68rem;
-            color: var(--paper-dim);
-            letter-spacing: 0.08rem;
-            font-family: 'uvKits', sans-serif !important;
-        }
-        .object-status {
-            padding: 0.2rem 0.5rem;
-            font-size: 0.6rem;
-            letter-spacing: 0.1rem;
-            font-weight: bold;
-            font-family: 'uvKits', sans-serif !important;
-            flex-shrink: 0;
-        }
-        .object-status.active { background: #55ff55; color: #000; }
-        .object-status.construction { background: #ffaa00; color: #000; }
-        .object-status.planned { background: var(--accent); color: #000; }
-        .object-desc {
-            font-size: 0.83rem;
-            color: var(--paper);
-            line-height: 1.6;
-            opacity: 0.85;
+        .join-title {
+            font-size: 1.2rem;
+            color: #fff;
             margin-bottom: 0.8rem;
-        }
-        .object-meta {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.3rem 1rem;
-            font-size: 0.72rem;
-            color: var(--paper-dim);
-            font-family: 'uvKits', sans-serif !important;
-        }
-        .object-meta strong { color: var(--accent); font-weight: normal; }
-        
-        /* ===== ОРГАНИЗАЦИИ ===== */
-        .orgs {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
-            gap: 0.8rem;
-        }
-        .org {
-            padding: 1rem 1.2rem;
-            background: rgba(0, 0, 0, 0.4);
-            border-left: 3px solid var(--accent);
-        }
-        .org-name {
-            font-size: 0.92rem;
-            color: var(--accent);
-            margin-bottom: 0.3rem;
             letter-spacing: 0.05rem;
             font-family: 'uvKits', sans-serif !important;
         }
-        .org-status {
-            font-size: 0.82rem;
+        .join-text {
+            font-size: 0.9rem;
             color: var(--paper);
-            line-height: 1.6;
+            max-width: 40rem;
+            margin: 0 auto 1.5rem;
             opacity: 0.85;
+            line-height: 1.7;
         }
         
         /* ===== КНОПКИ ===== */
@@ -605,14 +520,8 @@
             color: var(--accent);
             box-shadow: 0 0 20px var(--accent-glow);
         }
-        .btn.ghost {
-            background: transparent;
-            color: var(--accent);
-        }
-        .btn.ghost:hover {
-            background: var(--accent);
-            color: #000;
-        }
+        .btn.ghost { background: transparent; color: var(--accent); }
+        .btn.ghost:hover { background: var(--accent); color: #000; }
         
         /* ===== КОНТАКТЫ ===== */
         .contacts {
@@ -647,6 +556,228 @@
             font-family: 'uvKits', sans-serif !important;
         }
         
+        /* ===== МОДАЛКА ===== */
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(6px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+            opacity: 0;
+            transition: opacity 0.25s ease;
+        }
+        .modal.show { display: flex; opacity: 1; }
+        .modal-content {
+            background: var(--bg-mid);
+            border: 2px solid var(--accent);
+            max-width: 55rem;
+            width: 100%;
+            max-height: 88vh;
+            overflow-y: auto;
+            position: relative;
+            padding: 2rem;
+            animation: slideDown 0.3s ease;
+        }
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .modal-close {
+            position: absolute;
+            top: 0.8rem;
+            right: 0.8rem;
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+            width: 2rem;
+            height: 2rem;
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            font-family: 'uvKits', sans-serif !important;
+        }
+        .modal-close:hover { background: var(--accent); color: #000; }
+        
+        /* ===== КОНТЕНТ МОДАЛКИ ===== */
+        .doc-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1rem;
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--accent);
+        }
+        .doc-title {
+            font-size: 1.5rem;
+            color: var(--accent);
+            letter-spacing: 0.05rem;
+            font-family: 'uvKits', sans-serif !important;
+        }
+        .doc-subtitle {
+            font-size: 0.8rem;
+            color: var(--paper-dim);
+            letter-spacing: 0.1rem;
+            margin-top: 0.3rem;
+            font-family: 'uvKits', sans-serif !important;
+        }
+        .doc-stamp {
+            padding: 0.3rem 0.7rem;
+            background: var(--accent);
+            color: #000;
+            font-size: 0.7rem;
+            letter-spacing: 0.15rem;
+            font-weight: bold;
+            font-family: 'uvKits', sans-serif !important;
+            transform: rotate(-3deg);
+        }
+        
+        .doc-section { margin-bottom: 1.5rem; }
+        .doc-section-title {
+            font-size: 0.85rem;
+            color: var(--accent);
+            letter-spacing: 0.12rem;
+            margin-bottom: 0.6rem;
+            font-family: 'uvKits', sans-serif !important;
+            border-left: 3px solid var(--accent);
+            padding-left: 0.6rem;
+        }
+        .doc-section-text {
+            font-size: 0.9rem;
+            color: var(--paper);
+            line-height: 1.7;
+            opacity: 0.9;
+        }
+        
+        .doc-meta-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+            gap: 0.6rem;
+            margin-bottom: 1.5rem;
+        }
+        .doc-meta-item {
+            padding: 0.6rem 0.8rem;
+            background: rgba(0, 0, 0, 0.5);
+            border-left: 2px solid var(--accent);
+        }
+        .doc-meta-label {
+            font-size: 0.62rem;
+            color: var(--paper-dim);
+            letter-spacing: 0.15rem;
+            margin-bottom: 0.2rem;
+            font-family: 'uvKits', sans-serif !important;
+        }
+        .doc-meta-value {
+            font-size: 0.85rem;
+            color: var(--accent);
+            font-family: 'uvKits', sans-serif !important;
+        }
+        
+        .doc-map {
+            width: 100%;
+            border: 1px solid var(--line);
+            margin-bottom: 0.8rem;
+            background: #000;
+            image-rendering: pixelated;
+            display: block;
+        }
+        .doc-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem 1.2rem;
+            padding: 0.8rem 1rem;
+            background: rgba(0, 0, 0, 0.4);
+            border-left: 3px solid var(--accent);
+            font-size: 0.78rem;
+            font-family: 'uvKits', sans-serif !important;
+            margin-bottom: 1.5rem;
+        }
+        .doc-legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--paper);
+        }
+        .doc-legend-color {
+            width: 0.9rem;
+            height: 0.9rem;
+            border: 1px solid #000;
+            flex-shrink: 0;
+        }
+        
+        .doc-list { display: flex; flex-direction: column; gap: 0.4rem; }
+        .doc-list-item {
+            padding: 0.6rem 0.9rem;
+            background: rgba(0, 0, 0, 0.4);
+            border-left: 2px solid var(--accent);
+            font-size: 0.85rem;
+            color: var(--paper);
+            line-height: 1.5;
+        }
+        .doc-list-item strong {
+            color: var(--accent);
+            display: block;
+            margin-bottom: 0.2rem;
+            font-family: 'uvKits', sans-serif !important;
+        }
+        
+        .doc-screenshots {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+            gap: 0.6rem;
+            margin-top: 0.6rem;
+        }
+        .doc-screenshot {
+            width: 100%;
+            border: 1px solid var(--line);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            image-rendering: pixelated;
+        }
+        .doc-screenshot:hover {
+            border-color: var(--accent);
+            transform: scale(1.02);
+        }
+        
+        .doc-notes {
+            padding: 0.9rem 1.1rem;
+            background: rgba(158, 96, 96, 0.08);
+            border: 1px dashed var(--accent);
+            font-size: 0.85rem;
+            color: var(--paper);
+            line-height: 1.6;
+            font-style: italic;
+            font-family: 'uvKits', sans-serif !important;
+        }
+        
+        /* ===== LIGHTBOX ===== */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            cursor: zoom-out;
+        }
+        .lightbox.show { display: flex; }
+        .lightbox img {
+            max-width: 95vw;
+            max-height: 90vh;
+            border: 2px solid var(--accent);
+            object-fit: contain;
+            image-rendering: pixelated;
+        }
+        
         /* ===== ФУТЕР ===== */
         .footer {
             padding: 2rem 0;
@@ -676,6 +807,64 @@
             color: var(--accent);
             text-shadow: 0 0 12px var(--accent-glow);
         }
+    /* ============================================================
+   ПЕРЕОПРЕДЕЛЕНИЕ РАЗМЕРОВ ШРИФТА (для читаемости)
+   ============================================================ */
+body {
+    font-size: 17px;
+    line-height: 1.75;
+    letter-spacing: 0.02em;
+}
+
+.hero-title { font-size: clamp(2rem, 4.5vw, 3.2rem); }
+.hero-desc { font-size: 1.05rem; line-height: 1.8; }
+
+.brand-name { font-size: 1.15rem; }
+.brand-sub { font-size: 0.75rem; }
+.nav-btn { font-size: 0.9rem; }
+.status-dot { font-size: 0.78rem; }
+
+.fact-label { font-size: 0.78rem; }
+.fact-value { font-size: 1.05rem; }
+
+.section-num { font-size: 0.82rem; }
+.section-title { font-size: clamp(1.4rem, 3vw, 1.9rem); }
+.section-sub { font-size: 0.85rem; }
+
+.prose p { font-size: 1.05rem; line-height: 1.85; }
+.principle { font-size: 1rem; line-height: 1.7; }
+
+.card-title { font-size: 1.15rem; }
+.card-subtitle { font-size: 0.85rem; }
+.card-badge { font-size: 0.72rem; }
+.card-desc { font-size: 0.95rem; line-height: 1.7; }
+.card-meta { font-size: 0.85rem; }
+.card-hint { font-size: 0.8rem; }
+
+.accordion-title { font-size: 1.05rem; }
+.accordion-count { font-size: 0.82rem; }
+
+.member-name { font-size: 1rem; }
+.member-role { font-size: 0.82rem; }
+
+.join-title { font-size: 1.4rem; }
+.join-text { font-size: 1rem; line-height: 1.75; }
+
+.btn { font-size: 0.92rem; }
+
+.contact-label { font-size: 0.78rem; }
+.contact-value { font-size: 1.05rem; }
+
+.doc-title { font-size: 1.7rem; }
+.doc-subtitle { font-size: 0.92rem; }
+.doc-section-title { font-size: 1rem; }
+.doc-section-text { font-size: 1rem; line-height: 1.75; }
+.doc-meta-label { font-size: 0.75rem; }
+.doc-meta-value { font-size: 1rem; }
+.doc-list-item { font-size: 0.95rem; }
+.doc-notes { font-size: 0.95rem; }
+
+.footer { font-size: 0.88rem; }
     </style>
 </head>
 <body>
@@ -683,7 +872,7 @@
     <div class="bg-layer glow"></div>
     <div class="bg-layer noise"></div>
     
-    <!-- ===== ШАПКА С ТАБАМИ ===== -->
+    <!-- ===== ШАПКА ===== -->
     <header class="header">
         <div class="header-inner">
             <div class="brand" id="brandLogo">
@@ -704,7 +893,6 @@
             <div class="status-dot">АКТИВНО</div>
         </div>
     </header>
-    
     <div class="wrap">
         
         <!-- ============================================================
@@ -806,15 +994,37 @@
                     <span class="section-num">04</span>
                     <h2 class="section-title">ОТНОШЕНИЯ</h2>
                 </div>
-                <div class="orgs">
-                    <div class="org">
-                        <div class="org-name">GRIFFIN CORP</div>
-                        <div class="org-status">Тёплые отношения. Наш генеральный директор также является сотрудником корпорации.</div>
+                <div class="principles">
+                    <div class="principle">
+                        <strong style="color: var(--accent);">GRIFFIN CORP</strong><br>
+                        Тёплые отношения. Наш генеральный директор также является 
+                        сотрудником корпорации.
                     </div>
-                    <div class="org">
-                        <div class="org-name">УРОБОРОС</div>
-                        <div class="org-status">Нейтрально-хорошие отношения. Поддерживаем дружеские контакты.</div>
+                    <div class="principle">
+                        <strong style="color: var(--accent);">УРОБОРОС</strong><br>
+                        Нейтрально-хорошие отношения. Поддерживаем дружеские контакты.
                     </div>
+                </div>
+            </section>
+            
+            <section class="section">
+                <div class="section-head">
+                    <span class="section-num">05</span>
+                    <h2 class="section-title">КОНТАКТЫ</h2>
+                </div>
+                <div class="contacts">
+                    <a href="https://t.me/CXCInc" target="_blank" class="contact">
+                        <span class="contact-label">TELEGRAM КОМПАНИИ</span>
+                        <span class="contact-value">@CXCInc</span>
+                    </a>
+                    <a href="https://t.me/singularity_sl" target="_blank" class="contact">
+                        <span class="contact-label">TELEGRAM СЕРВЕРА</span>
+                        <span class="contact-value">@singularity_sl</span>
+                    </a>
+                    <a href="https://discord.gg/fnzjSWf88p" target="_blank" class="contact">
+                        <span class="contact-label">DISCORD</span>
+                        <span class="contact-value">Singularity</span>
+                    </a>
                 </div>
             </section>
             
@@ -832,107 +1042,14 @@
                 </h1>
                 <p class="hero-desc">
                     Всё, чем занимается Суньхуньсяй Inc. прямо сейчас — от реконструкции 
-                    объектов до поддержки инфраструктуры сервера.
+                    объектов до поддержки инфраструктуры сервера. Нажми на карточку, 
+                    чтобы открыть документ о проекте.
                 </p>
             </div>
             
-            <div class="projects-grid">
-                <!-- ПРОЕКТ 1 -->
-                <div class="project">
-                    <div class="project-head">
-                        <div class="project-title">МФК «Юньтай»</div>
-                        <span class="project-badge ongoing">РЕКОНСТРУКЦИЯ</span>
-                    </div>
-                    <div class="project-desc">
-                        Превращение временной базы в многофункциональный комплекс. 
-                        Трейдхолл, торговая зона и обновлённый жилой комплекс.
-                    </div>
-                    <div class="project-meta">
-                        <span><strong>Начало:</strong> 2 сезон</span>
-                        <span><strong>Ответственный:</strong> Folksy13_dll</span>
-                    </div>
-                </div>
-                
-                <!-- ПРОЕКТ 2 -->
-                <div class="project">
-                    <div class="project-head">
-                        <div class="project-title">Основная точка на спавне</div>
-                        <span class="project-badge planned">ПЛАНИРУЕТСЯ</span>
-                    </div>
-                    <div class="project-desc">
-                        Возведение главного представительского центра компании на спавне. 
-                        Место уже зарезервировано, строительство начнётся в ближайшее время.
-                    </div>
-                    <div class="project-meta">
-                        <span><strong>Локация:</strong> Спавн</span>
-                        <span><strong>Статус:</strong> Зарезервировано</span>
-                    </div>
-                </div>
-                
-                <!-- ПРОЕКТ 3 -->
-                <div class="project">
-                    <div class="project-head">
-                        <div class="project-title">Поддержка сайта Singularity</div>
-                        <span class="project-badge active">АКТИВНО</span>
-                    </div>
-                    <div class="project-desc">
-                        Суньхуньсяй Inc. занимается поддержкой и развитием официального 
-                        сайта сервера Singularity. Технический вклад в инфраструктуру 
-                        сообщества.
-                    </div>
-                    <div class="project-meta">
-                        <span><strong>Начало:</strong> 2 сезон</span>
-                        <span><strong>Платформа:</strong> GitHub Pages</span>
-                    </div>
-                </div>
-                
-                <!-- ПРОЕКТ 4 -->
-                <div class="project">
-                    <div class="project-head">
-                        <div class="project-title">Логистика и доставка</div>
-                        <span class="project-badge active">АКТИВНО</span>
-                    </div>
-                    <div class="project-desc">
-                        Приём заказов на доставку ресурсов и материалов на указанные 
-                        координаты. Первый сезонный заказ уже успешно выполнен.
-                    </div>
-                    <div class="project-meta">
-                        <span><strong>Заказов:</strong> 1+</span>
-                        <span><strong>Статус:</strong> Приём открыт</span>
-                    </div>
-                </div>
-                
-                <!-- ПРОЕКТ 5 -->
-                <div class="project">
-                    <div class="project-head">
-                        <div class="project-title">Исследование аномалий</div>
-                        <span class="project-badge active">АКТИВНО</span>
-                    </div>
-                    <div class="project-desc">
-                        Изучение аномальных зон и механик сервера. Документирование 
-                        находок и распространение знаний среди сообщества.
-                    </div>
-                    <div class="project-meta">
-                        <span><strong>Начало:</strong> 0 сезон</span>
-                        <span><strong>Находок:</strong> Засекречено</span>
-                    </div>
-                </div>
-                
-                <!-- ПРОЕКТ 6 -->
-                <div class="project">
-                    <div class="project-head">
-                        <div class="project-title">Экипировка компании</div>
-                        <span class="project-badge done">ЗАВЕРШЕНО</span>
-                    </div>
-                    <div class="project-desc">
-                        Получена незеритовая броня от Griffin Corp., зачарована 
-                        Суньхуньсяй Inc. для повышения эффективности работы 
-                        сотрудников.
-                    </div>
-                    <div class="project-meta">
-                        <span><strong>Партнёр:</strong> Griffin Corp</span>
-                        <span><strong>Результат:</strong> Успешно</span>
-                    </div>
+            <div class="cards-grid" id="projectsGrid">
+                <div style="color: var(--paper-dim); text-align: center; grid-column: 1/-1; padding: 2rem;">
+                    Загрузка проектов...
                 </div>
             </div>
             
@@ -949,47 +1066,14 @@
                     <span class="accent">ТЕРРИТОРИЙ</span>
                 </h1>
                 <p class="hero-desc">
-                    Объекты и территории под управлением Суньхуньсяй Inc. 
-                    Каждый объект имеет свой паспорт и статус.
+                    Объекты и территории под управлением Суньхуньсяй Inc. Нажми на карточку, 
+                    чтобы открыть паспорт объекта с картой, легендой и скриншотами.
                 </p>
             </div>
             
-            <div class="objects-grid">
-                <div class="object">
-                    <div class="object-head">
-                        <div>
-                            <div class="object-name">МФК «Юньтай»</div>
-                            <div class="object-type">МНОГОФУНКЦИОНАЛЬНЫЙ КОМПЛЕКС</div>
-                        </div>
-                        <span class="object-status construction">РЕКОНСТРУКЦИЯ</span>
-                    </div>
-                    <div class="object-meta">
-                        <span><strong>Ответственный:</strong> Folksy13_dll</span>
-                        <span><strong>Координаты:</strong> Засекречено</span>
-                    </div>
-                    <p class="object-desc" style="margin-top: 0.8rem;">
-                        Реконструкция временной базы в многофункциональный комплекс 
-                        Суньхуньсяй Inc. Включает трейдхолл, торговую зону и 
-                        обновлённый жилой комплекс.
-                    </p>
-                </div>
-                
-                <div class="object">
-                    <div class="object-head">
-                        <div>
-                            <div class="object-name">Основная точка</div>
-                            <div class="object-type">ТОРГОВО-ПРЕДСТАВИТЕЛЬСКИЙ ЦЕНТР</div>
-                        </div>
-                        <span class="object-status planned">ПЛАНИРУЕТСЯ</span>
-                    </div>
-                    <div class="object-meta">
-                        <span><strong>Ответственный:</strong> Folksy13_dll</span>
-                        <span><strong>Локация:</strong> Спавн</span>
-                    </div>
-                    <p class="object-desc" style="margin-top: 0.8rem;">
-                        Главная точка компании на спавне. Место зарезервировано, 
-                        строительство начнётся в ближайшее время.
-                    </p>
+            <div class="cards-grid" id="objectsGrid">
+                <div style="color: var(--paper-dim); text-align: center; grid-column: 1/-1; padding: 2rem;">
+                    Загрузка объектов...
                 </div>
             </div>
             
@@ -1006,90 +1090,27 @@
                     <span class="accent">КОМАНДА</span>
                 </h1>
                 <p class="hero-desc">
-                    Сотрудники и участники Суньхуньсяй Inc. Мы открыты для новых людей — 
+                    Сотрудники и партнёры Суньхуньсяй Inc. Мы открыты для новых людей — 
                     присоединиться можно, не выходя из другой организации.
                 </p>
             </div>
             
-            <!-- Руководство -->
-            <div class="accordion open">
-                <div class="accordion-head" onclick="toggleAccordion(this)">
-                    <div class="accordion-title">РУКОВОДСТВО</div>
-                    <span class="accordion-count">1</span>
-                </div>
-                <div class="accordion-body">
-                    <div class="accordion-inner">
-                        <div class="members">
-                            <div class="member">
-                                <img src="https://minotar.net/helm/Folksy13_dll/64" class="member-head" onerror="this.src='logo.jpg'">
-                                <div class="member-info">
-                                    <span class="member-name">Folksy13_dll</span>
-                                    <span class="member-role">ГЕНЕРАЛЬНЫЙ ДИРЕКТОР</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <div id="teamContainer">
+                <div style="color: var(--paper-dim); text-align: center; padding: 2rem;">
+                    Загрузка команды...
                 </div>
             </div>
             
-            <!-- Сотрудники -->
-            <div class="accordion">
-                <div class="accordion-head" onclick="toggleAccordion(this)">
-                    <div class="accordion-title">СОТРУДНИКИ</div>
-                    <span class="accordion-count">—</span>
-                </div>
-                <div class="accordion-body">
-                    <div class="accordion-inner">
-                        <div class="members">
-                            <div class="member" style="border-left-color: #555;">
-                                <div class="member-head" style="display: flex; align-items: center; justify-content: center; color: #666;">?</div>
-                                <div class="member-info">
-                                    <span class="member-name" style="color: #888;">Позиция открыта</span>
-                                    <span class="member-role">НАБОР ОТКРЫТ</span>
-                                </div>
-                            </div>
-                        </div>
-                        <p style="font-size: 0.85rem; color: var(--paper-dim); margin-top: 1rem; line-height: 1.6;">
-                            Мы активно набираем сотрудников на разные направления: торговля, 
-                            строительство, исследования, логистика. Необязательно выходить 
-                            из другой организации — присоединяйтесь как совместители.
-                        </p>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Участники -->
-            <div class="accordion">
-                <div class="accordion-head" onclick="toggleAccordion(this)">
-                    <div class="accordion-title">УЧАСТНИКИ И ПАРТНЁРЫ</div>
-                    <span class="accordion-count">—</span>
-                </div>
-                <div class="accordion-body">
-                    <div class="accordion-inner">
-                        <p style="font-size: 0.85rem; color: var(--paper-dim); line-height: 1.6;">
-                            Список участников и партнёров компании будет пополняться. 
-                            Если вы работаете с нами — напишите в Telegram, чтобы вас добавили в реестр.
-                        </p>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Как присоединиться -->
-            <div class="accordion">
-                <div class="accordion-head" onclick="toggleAccordion(this)">
-                    <div class="accordion-title">КАК ПРИСОЕДИНИТЬСЯ</div>
-                    <span class="accordion-count">INFO</span>
-                </div>
-                <div class="accordion-body">
-                    <div class="accordion-inner">
-                        <p style="font-size: 0.88rem; color: var(--paper); line-height: 1.7; margin-bottom: 1rem;">
-                            Мы открыты для новых людей. Присоединиться можно как в качестве 
-                            полноценного сотрудника, так и в качестве совместителя — без выхода 
-                            из текущей организации.
-                        </p>
-                        <a href="https://t.me/CXCInc" target="_blank" class="btn">НАПИСАТЬ В TELEGRAM</a>
-                    </div>
-                </div>
+            <!-- Блок "Присоединиться" -->
+            <div class="join-block">
+                <div class="join-title">ПРИСОЕДИНИТЬСЯ К КОМАНДЕ</div>
+                <p class="join-text">
+                    Мы открыты для новых людей. Присоединиться можно как в качестве 
+                    полноценного сотрудника, так и в качестве совместителя — без выхода 
+                    из текущей организации. Мы ищем людей, готовых исследовать, помогать 
+                    и развивать сообщество вместе с нами.
+                </p>
+                <a href="https://t.me/CXCInc" target="_blank" class="btn">НАПИСАТЬ В TELEGRAM</a>
             </div>
             
         </div>
@@ -1105,8 +1126,27 @@
         
     </div>
     
+    <!-- ============================================================
+         МОДАЛКА (универсальная для проектов и объектов)
+         ============================================================ -->
+    <div class="modal" id="docModal" onclick="closeModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModal()">✕</button>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+    
+    <!-- ============================================================
+         LIGHTBOX (для скриншотов)
+         ============================================================ -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <img id="lightboxImg" src="" alt="">
+    </div>
+    
     <script>
-        // ===== ПЕРЕКЛЮЧЕНИЕ ТАБОВ =====
+        // ============================================================
+        // ПЕРЕКЛЮЧЕНИЕ ТАБОВ
+        // ============================================================
         (function setupTabs() {
             const btns = document.querySelectorAll('.nav-btn');
             const contents = document.querySelectorAll('.tab-content');
@@ -1122,19 +1162,471 @@
                     const target = document.getElementById('tab-' + tabId);
                     if (target) target.classList.add('active');
                     
-                    // Прокрутка вверх при смене таба
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 });
             });
         })();
         
-        // ===== АККОРДЕОН =====
+        // ============================================================
+        // АККОРДЕОН
+        // ============================================================
         function toggleAccordion(head) {
             const accordion = head.parentElement;
             accordion.classList.toggle('open');
         }
         
-        // ===== ПАСХАЛКА: 7 кликов по логотипу =====
+        // ============================================================
+        // УТИЛИТЫ
+        // ============================================================
+        function escapeHTML(str) {
+            return String(str || '').replace(/[&<>"']/g, c => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#39;'
+            }[c]));
+        }
+        
+        // ============================================================
+        // ЗАГРУЗКА ПРОЕКТОВ
+        // ============================================================
+        let allProjects = [];
+        
+        async function loadProjects() {
+            const grid = document.getElementById('projectsGrid');
+            try {
+                const res = await fetch('data/projects.json?v=' + Date.now());
+                if (!res.ok) throw new Error('projects.json не найден');
+                const data = await res.json();
+                allProjects = data.projects || [];
+                
+                if (allProjects.length === 0) {
+                    grid.innerHTML = '<p style="color: var(--paper-dim); text-align: center; grid-column: 1/-1;">Проекты пока не заполнены.</p>';
+                    return;
+                }
+                
+                grid.innerHTML = allProjects.map(p => `
+                    <div class="card" onclick="openProject('${p.id}')">
+                        <div class="card-head">
+                            <div>
+                                <div class="card-title">${escapeHTML(p.title)}</div>
+                                <div class="card-subtitle">${escapeHTML(p.subtitle || '')}</div>
+                            </div>
+                            <span class="card-badge ${p.status}">${escapeHTML(p.statusLabel)}</span>
+                        </div>
+                        <div class="card-desc">${escapeHTML(p.shortDesc)}</div>
+                        <div class="card-meta">
+                            ${p.startDate ? `<span><strong>Начало:</strong> ${escapeHTML(p.startDate)}</span>` : ''}
+                            ${p.responsible ? `<span><strong>Ответственный:</strong> ${escapeHTML(p.responsible)}</span>` : ''}
+                        </div>
+                        <div class="card-hint">→ ОТКРЫТЬ ДОКУМЕНТ</div>
+                    </div>
+                `).join('');
+            } catch (e) {
+                console.error('Ошибка загрузки проектов:', e);
+                grid.innerHTML = '<p style="color: #ff5555; text-align: center; grid-column: 1/-1;">Ошибка загрузки проектов</p>';
+            }
+        }
+        
+        // ============================================================
+        // ЗАГРУЗКА ОБЪЕКТОВ
+        // ============================================================
+        let allObjects = [];
+        
+        async function loadObjects() {
+            const grid = document.getElementById('objectsGrid');
+            try {
+                const res = await fetch('data/objects.json?v=' + Date.now());
+                if (!res.ok) throw new Error('objects.json не найден');
+                const data = await res.json();
+                allObjects = data.objects || [];
+                
+                if (allObjects.length === 0) {
+                    grid.innerHTML = '<p style="color: var(--paper-dim); text-align: center; grid-column: 1/-1;">Объекты пока не заполнены.</p>';
+                    return;
+                }
+                
+                grid.innerHTML = allObjects.map(o => `
+                    <div class="card" onclick="openObject('${o.id}')">
+                        <div class="card-head">
+                            <div>
+                                <div class="card-title">${escapeHTML(o.name)}</div>
+                                <div class="card-subtitle">${escapeHTML(o.type || '')}</div>
+                            </div>
+                            <span class="card-badge ${o.status}">${escapeHTML(o.statusLabel)}</span>
+                        </div>
+                        <div class="card-desc">${escapeHTML(o.passport?.intro || '')}</div>
+                        <div class="card-meta">
+                            ${o.responsible ? `<span><strong>Ответственный:</strong> ${escapeHTML(o.responsible)}</span>` : ''}
+                            ${o.coordinates ? `<span><strong>Координаты:</strong> ${escapeHTML(o.coordinates)}</span>` : ''}
+                        </div>
+                        <div class="card-hint">→ ОТКРЫТЬ ПАСПОРТ</div>
+                    </div>
+                `).join('');
+            } catch (e) {
+                console.error('Ошибка загрузки объектов:', e);
+                grid.innerHTML = '<p style="color: #ff5555; text-align: center; grid-column: 1/-1;">Ошибка загрузки объектов</p>';
+            }
+        }
+        
+        // ============================================================
+        // ЗАГРУЗКА КОМАНДЫ
+        // ============================================================
+        async function loadTeam() {
+            const container = document.getElementById('teamContainer');
+            try {
+                const res = await fetch('data/team.json?v=' + Date.now());
+                if (!res.ok) throw new Error('team.json не найден');
+                const data = await res.json();
+                const team = data.team || {};
+                
+                let html = '';
+                
+                // Руководство
+                if (team.leadership && team.leadership.length > 0) {
+                    html += `
+                        <div class="accordion open">
+                            <div class="accordion-head" onclick="toggleAccordion(this)">
+                                <div class="accordion-title">РУКОВОДСТВО</div>
+                                <span class="accordion-count">${team.leadership.length}</span>
+                            </div>
+                            <div class="accordion-body">
+                                <div class="accordion-inner">
+                                    <div class="members">
+                                        ${team.leadership.map(m => renderMember(m)).join('')}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                // Сотрудники
+                if (team.staff && team.staff.length > 0) {
+                    html += `
+                        <div class="accordion">
+                            <div class="accordion-head" onclick="toggleAccordion(this)">
+                                <div class="accordion-title">СОТРУДНИКИ</div>
+                                <span class="accordion-count">${team.staff.length}</span>
+                            </div>
+                            <div class="accordion-body">
+                                <div class="accordion-inner">
+                                    <div class="members">
+                                        ${team.staff.map(m => renderMember(m)).join('')}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    html += `
+                        <div class="accordion">
+                            <div class="accordion-head" onclick="toggleAccordion(this)">
+                                <div class="accordion-title">СОТРУДНИКИ</div>
+                                <span class="accordion-count">НАБОР</span>
+                            </div>
+                            <div class="accordion-body">
+                                <div class="accordion-inner">
+                                    <p style="font-size: 0.85rem; color: var(--paper-dim); line-height: 1.6;">
+                                        Список сотрудников пополняется. Мы активно ищем людей 
+                                        на направления: торговля, строительство, исследования, логистика.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                // Партнёры
+                if (team.partners && team.partners.length > 0) {
+                    html += `
+                        <div class="accordion">
+                            <div class="accordion-head" onclick="toggleAccordion(this)">
+                                <div class="accordion-title">ПАРТНЁРЫ</div>
+                                <span class="accordion-count">${team.partners.length}</span>
+                            </div>
+                            <div class="accordion-body">
+                                <div class="accordion-inner">
+                                    <div class="members">
+                                        ${team.partners.map(m => renderMember(m, true)).join('')}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                container.innerHTML = html;
+            } catch (e) {
+                console.error('Ошибка загрузки команды:', e);
+                container.innerHTML = '<p style="color: #ff5555; text-align: center; padding: 2rem;">Ошибка загрузки команды</p>';
+            }
+        }
+        
+        function renderMember(m, isPartner = false) {
+            const avatarSrc = m.avatar || `https://minotar.net/helm/${encodeURIComponent(m.name)}/64`;
+            return `
+                <div class="member">
+                    <img src="${avatarSrc}" class="member-head" onerror="this.src='logo.jpg'" alt="${escapeHTML(m.name)}">
+                    <div class="member-info">
+                        <span class="member-name">${escapeHTML(m.name)}</span>
+                        <span class="member-role">${escapeHTML(m.role || '')}</span>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // ============================================================
+        // МОДАЛКА: ПРОЕКТ
+        // ============================================================
+        function openProject(id) {
+            const p = allProjects.find(x => x.id === id);
+            if (!p) return;
+            
+            const doc = p.fullDocument || {};
+            
+            let html = `
+                <div class="doc-head">
+                    <div>
+                        <div class="doc-title">${escapeHTML(p.title)}</div>
+                        <div class="doc-subtitle">${escapeHTML(p.subtitle || '')} · ДОКУМЕНТ О ПРОЕКТЕ</div>
+                    </div>
+                    <span class="doc-stamp">${escapeHTML(p.statusLabel)}</span>
+                </div>
+                
+                <div class="doc-meta-grid">
+                    ${p.startDate ? `
+                        <div class="doc-meta-item">
+                            <div class="doc-meta-label">НАЧАЛО</div>
+                            <div class="doc-meta-value">${escapeHTML(p.startDate)}</div>
+                        </div>
+                    ` : ''}
+                    ${p.responsible ? `
+                        <div class="doc-meta-item">
+                            <div class="doc-meta-label">ОТВЕТСТВЕННЫЙ</div>
+                            <div class="doc-meta-value">${escapeHTML(p.responsible)}</div>
+                        </div>
+                    ` : ''}
+                    ${p.tags && p.tags.length > 0 ? `
+                        <div class="doc-meta-item">
+                            <div class="doc-meta-label">ТЕГИ</div>
+                            <div class="doc-meta-value">${p.tags.map(escapeHTML).join(' · ')}</div>
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+            
+            if (doc.intro) {
+                html += `
+                    <div class="doc-section">
+                        <div class="doc-section-title">ОПИСАНИЕ</div>
+                        <div class="doc-section-text">${escapeHTML(doc.intro)}</div>
+                    </div>
+                `;
+            }
+            
+            if (doc.sections && doc.sections.length > 0) {
+                doc.sections.forEach(s => {
+                    html += `
+                        <div class="doc-section">
+                            <div class="doc-section-title">${escapeHTML(s.title)}</div>
+                            <div class="doc-section-text">${escapeHTML(s.content)}</div>
+                        </div>
+                    `;
+                });
+            }
+            
+            if (doc.screenshots && doc.screenshots.length > 0) {
+                html += `
+                    <div class="doc-section">
+                        <div class="doc-section-title">СКРИНШОТЫ</div>
+                        <div class="doc-screenshots">
+                            ${doc.screenshots.map(src => `
+                                <img src="${escapeHTML(src)}" class="doc-screenshot" 
+                                     onclick="openLightbox('${escapeHTML(src)}')"
+                                     onerror="this.style.display='none'" alt="Скриншот">
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            
+            if (doc.notes) {
+                html += `
+                    <div class="doc-section">
+                        <div class="doc-section-title">ПРИМЕЧАНИЕ</div>
+                        <div class="doc-notes">${escapeHTML(doc.notes)}</div>
+                    </div>
+                `;
+            }
+            
+            document.getElementById('modalBody').innerHTML = html;
+            document.getElementById('docModal').classList.add('show');
+        }
+        
+        // ============================================================
+        // МОДАЛКА: ПАСПОРТ ОБЪЕКТА
+        // ============================================================
+        function openObject(id) {
+            const o = allObjects.find(x => x.id === id);
+            if (!o) return;
+            
+            const pp = o.passport || {};
+            
+            let html = `
+                <div class="doc-head">
+                    <div>
+                        <div class="doc-title">${escapeHTML(o.name)}</div>
+                        <div class="doc-subtitle">${escapeHTML(o.nameFull || o.type || '')} · ПАСПОРТ ОБЪЕКТА</div>
+                    </div>
+                    <span class="doc-stamp">${escapeHTML(o.statusLabel)}</span>
+                </div>
+                
+                <div class="doc-meta-grid">
+                    ${o.responsible ? `
+                        <div class="doc-meta-item">
+                            <div class="doc-meta-label">ОТВЕТСТВЕННЫЙ</div>
+                            <div class="doc-meta-value">${escapeHTML(o.responsible)}</div>
+                        </div>
+                    ` : ''}
+                    ${o.coordinates ? `
+                        <div class="doc-meta-item">
+                            <div class="doc-meta-label">КООРДИНАТЫ</div>
+                            <div class="doc-meta-value">${escapeHTML(o.coordinates)}</div>
+                        </div>
+                    ` : ''}
+                    ${o.startDate ? `
+                        <div class="doc-meta-item">
+                            <div class="doc-meta-label">НАЧАЛО РАБОТ</div>
+                            <div class="doc-meta-value">${escapeHTML(o.startDate)}</div>
+                        </div>
+                    ` : ''}
+                    <div class="doc-meta-item">
+                        <div class="doc-meta-label">ТИП</div>
+                        <div class="doc-meta-value">${escapeHTML(o.type || '—')}</div>
+                    </div>
+                </div>
+            `;
+            
+            if (pp.intro) {
+                html += `
+                    <div class="doc-section">
+                        <div class="doc-section-title">ОПИСАНИЕ ОБЪЕКТА</div>
+                        <div class="doc-section-text">${escapeHTML(pp.intro)}</div>
+                    </div>
+                `;
+            }
+            
+            if (pp.mapImage) {
+                html += `
+                    <div class="doc-section">
+                        <div class="doc-section-title">РАЗМЕТКА ТЕРРИТОРИИ</div>
+                        <img src="${escapeHTML(pp.mapImage)}" class="doc-map" 
+                             onclick="openLightbox('${escapeHTML(pp.mapImage)}')"
+                             onerror="this.style.display='none'" alt="Карта объекта">
+                    </div>
+                `;
+            }
+            
+            if (pp.mapLegend && pp.mapLegend.length > 0) {
+                html += `
+                    <div class="doc-legend">
+                        ${pp.mapLegend.map(l => `
+                            <div class="doc-legend-item">
+                                <div class="doc-legend-color" style="background: ${escapeHTML(l.color)};"></div>
+                                <span>${escapeHTML(l.label)}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            }
+            
+            if (pp.structure && pp.structure.length > 0) {
+                html += `
+                    <div class="doc-section">
+                        <div class="doc-section-title">СТРУКТУРА ОБЪЕКТА</div>
+                        <div class="doc-list">
+                            ${pp.structure.map(s => `
+                                <div class="doc-list-item">
+                                    <strong>${escapeHTML(s.name)}</strong>
+                                    ${escapeHTML(s.description || '')}
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            
+            if (pp.rules && pp.rules.length > 0) {
+                html += `
+                    <div class="doc-section">
+                        <div class="doc-section-title">ПРАВИЛА ПОСЕЩЕНИЯ</div>
+                        <div class="doc-list">
+                            ${pp.rules.map(r => `<div class="doc-list-item">${escapeHTML(r)}</div>`).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            
+            if (pp.screenshots && pp.screenshots.length > 0) {
+                html += `
+                    <div class="doc-section">
+                        <div class="doc-section-title">СКРИНШОТЫ</div>
+                        <div class="doc-screenshots">
+                            ${pp.screenshots.map(src => `
+                                <img src="${escapeHTML(src)}" class="doc-screenshot" 
+                                     onclick="openLightbox('${escapeHTML(src)}')"
+                                     onerror="this.style.display='none'" alt="Скриншот">
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            
+            if (pp.notes) {
+                html += `
+                    <div class="doc-section">
+                        <div class="doc-section-title">ПРИМЕЧАНИЕ</div>
+                        <div class="doc-notes">${escapeHTML(pp.notes)}</div>
+                    </div>
+                `;
+            }
+            
+            document.getElementById('modalBody').innerHTML = html;
+            document.getElementById('docModal').classList.add('show');
+        }
+        
+        // ============================================================
+        // МОДАЛКА: ЗАКРЫТИЕ
+        // ============================================================
+        function closeModal(e) {
+            if (!e || e.target.id === 'docModal' || e.target.classList.contains('modal-close')) {
+                document.getElementById('docModal').classList.remove('show');
+            }
+        }
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.getElementById('docModal').classList.remove('show');
+                document.getElementById('lightbox').classList.remove('show');
+            }
+        });
+        
+        // ============================================================
+        // LIGHTBOX
+        // ============================================================
+        function openLightbox(src) {
+            document.getElementById('lightboxImg').src = src;
+            document.getElementById('lightbox').classList.add('show');
+        }
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('show');
+        }
+        
+        // ============================================================
+        // ПАСХАЛКА: 7 кликов по логотипу
+        // ============================================================
         (function setupEasterEgg() {
             let clicks = 0;
             let timer = null;
@@ -1153,15 +1645,22 @@
                     hint.classList.add('revealed');
                     setTimeout(() => {
                         hint.classList.remove('revealed');
-                        setTimeout(() => {
-                            hint.textContent = '· · ·';
-                        }, 600);
+                        setTimeout(() => { hint.textContent = '· · ·'; }, 600);
                     }, 5000);
                 } else {
                     timer = setTimeout(() => { clicks = 0; }, 800);
                 }
             });
         })();
+        
+        // ============================================================
+        // ИНИЦИАЛИЗАЦИЯ
+        // ============================================================
+        window.addEventListener('DOMContentLoaded', () => {
+            loadProjects();
+            loadObjects();
+            loadTeam();
+        });
     </script>
 </body>
 </html>
