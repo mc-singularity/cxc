@@ -1,0 +1,22 @@
+{
+  "applicationTypes": [
+    {
+      "id": "staff",
+      "title": "Вступление в штат",
+      "description": "Полноценное сотрудничество в составе компании.",
+      "fields": ["nickname", "discord", "telegram", "skills", "motivation"]
+    },
+    {
+      "id": "partner",
+      "title": "Партнёрство",
+      "description": "Сотрудничество без выхода из другой организации.",
+      "fields": ["nickname", "discord", "telegram", "organization", "proposal"]
+    },
+    {
+      "id": "order",
+      "title": "Заказ на материалы",
+      "description": "Заявка на доставку ресурсов или материалов.",
+      "fields": ["nickname", "discord", "telegram", "item", "quantity", "coordinates"]
+    }
+  ]
+}
