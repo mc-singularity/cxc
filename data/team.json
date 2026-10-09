@@ -1,26 +1,46 @@
-{
+={
   "team": {
     "leadership": [
       {
+        "id": "folksy13_dll",
         "name": "Folksy13_dll",
+        "realName": "—",
         "role": "Генеральный директор",
-        "avatar": "https://minotar.net/helm/Folksy13_dll/64",
-        "note": "Основатель и руководитель компании"
+        "avatar": "https://minatr.net/armor/bust/Folksy13_dll/120",
+        "status": "active",
+        "statusLabel": "АКТИВЕН",
+        "joinedDate": "0 сезон",
+        "period": "SL: 0 сезон — настоящее время",
+        "organization": "Суньхуньсяй Inc. (основатель)",
+        "additionalOrgs": ["Griffin Corp — сотрудник"],
+        "acceptedBy": "—",
+        "note": "Основатель и руководитель компании",
+        "biography": "Основал Суньхуньсяй Inc. в нулевом сезоне. Одновременно является сотрудником Griffin Corp., что обеспечивает тёплые отношения между организациями.",
+        "socials": [
+          { "platform": "TELEGRAM", "url": "https://t.me/folksysasha13" },
+          { "platform": "YOUTUBE", "url": "https://www.youtube.com/@Folksy13" }
+        ]
       }
     ],
     "staff": [],
     "members": [],
     "partners": [
       {
+        "id": "griffin_corp",
         "name": "Griffin Corp",
+        "realName": "—",
         "role": "Стратегический партнёр",
-        "note": "Тёплые отношения, гендиректор Суньхуньсяй также сотрудник корпорации"
-      },
-      {
-        "name": "Уроборос",
-        "role": "Дружественная организация",
-        "note": "Нейтрально-хорошие отношения"
+        "avatar": "gf.jpg",
+        "status": "partner",
+        "statusLabel": "ПАРТНЁР",
+        "joinedDate": "0 сезон",
+        "period": "SL: 0 сезон — настоящее время",
+        "organization": "Военно-технологическая корпорация",
+        "additionalOrgs": [],
+        "acceptedBy": "—",
+        "note": "Тёплые отношения. Гендиректор Суньхуньсяй также сотрудник корпорации",
+        "biography": "Griffin — военно-технологическая корпорация, поддерживающая тёплые отношения с Суньхуньсяй Inc. Взаимодействие ведётся через директоров организаций.",
+        "socials": [
+          { "platform": "TELEGRAM", "url": "https://t.me/GRIFFINcorp" }
+        ]
       }
-    ]
-  }
-}
