@@ -41,8 +41,6 @@
       "statusLabel": "ПЛАНИРУЕТСЯ",
       "shortDesc": "Главный представительский центр компании на спавне. Место зарезервировано.",
       "startDate": "2 сезон",
-        "link": "https://mc-singularity.github.io/site/",
-  "linkText": "ОТКРЫТЬ САЙТ",
       "responsible": "Folksy13_dll",
       "tags": ["строительство", "торговля"],
       "fullDocument": {
@@ -71,6 +69,8 @@
       "startDate": "2 сезон",
       "responsible": "Folksy13_dll",
       "tags": ["разработка", "инфраструктура", "поддержка"],
+      "link": "https://mc-singularity.github.io/site/",
+      "linkText": "ОТКРЫТЬ САЙТ",
       "fullDocument": {
         "intro": "Компания Суньхуньсяй Inc. взяла на себя техническую поддержку и развитие официального сайта сервера Singularity.",
         "sections": [
