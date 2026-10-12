@@ -1713,10 +1713,9 @@ btns.forEach(btn => {
         if (target) target.classList.add('active');
         
         // Автозагрузка заказов при открытии вкладки
-        if (tabId === 'orders' && typeof loadOrders === 'function') {
-            loadOrders();
-        }
-        
+        if (tabId === 'orders' && typeof window.loadOrders === 'function') {
+    window.loadOrders();
+}
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 });
@@ -2236,14 +2235,19 @@ grid.innerHTML = allProjects.map(p => {
             });
         })();
         
-        // ============================================================
-        // ИНИЦИАЛИЗАЦИЯ
-        // ============================================================
-        window.addEventListener('DOMContentLoaded', () => {
-            loadProjects();
-            loadObjects();
-            loadTeam();
-        });
+// ============================================================
+// ИНИЦИАЛИЗАЦИЯ
+// ============================================================
+window.addEventListener('DOMContentLoaded', () => {
+    loadProjects();
+    loadObjects();
+    loadTeam();
+    
+    const activeTab = document.querySelector('.tab-content.active');
+    if (activeTab && activeTab.id === 'tab-orders') {
+        loadOrders();
+    }
+});
 // ============================================================
 // МОДАЛКА: ЛИЧНОЕ ДЕЛО УЧАСТНИКА (для людей)
 // ============================================================
@@ -2568,22 +2572,81 @@ async function openPartner(id) {
     document.getElementById('docModal').classList.add('show');
 }
 // ============================================================
-// АВТОЗАГРУЗКА ЗАКАЗОВ ПРИ ОТКРЫТИИ ВКЛАДКИ
+// ЗАГРУЗКА СПИСКА ЗАКАЗОВ
 // ============================================================
-document.addEventListener('DOMContentLoaded', () => {
-    const ordersTabBtn = document.querySelector('.nav-btn[data-tab="orders"]');
-    if (ordersTabBtn) {
-        ordersTabBtn.addEventListener('click', () => {
-            loadOrders();
-        });
-    }
+async function loadOrders() {
+    const listEl = document.getElementById('ordersList');
+    const countEl = document.getElementById('ordersCount');
+    if (!listEl) return;
     
-    // Если вкладка "ЗАКАЗЫ" активна при загрузке — грузим сразу
-    const activeTab = document.querySelector('.tab-content.active');
-    if (activeTab && activeTab.id === 'tab-orders') {
-        loadOrders();
+    try {
+        const res = await fetch('/api/order?v=' + Date.now());
+        const data = await res.json();
+        
+        if (!data.success) throw new Error(data.error);
+        
+        const orders = data.orders || [];
+        
+        if (countEl) {
+            countEl.textContent = orders.length > 0 
+                ? `${orders.length} АКТИВНЫХ` 
+                : 'НЕТ АКТИВНЫХ';
+        }
+        
+        if (orders.length === 0) {
+            listEl.innerHTML = '<p class="orders-empty">Активных заказов пока нет. Будьте первым!</p>';
+            return;
+        }
+        
+        const typeLabels = {
+            'item': '📦 ЗАКАЗ ТОВАРА',
+            'shelf': '🏪 ПОЛКА',
+            'logistics': '🚚 ЛОГИСТИКА'
+        };
+        
+        const statusLabels = {
+            'new': 'НОВЫЙ',
+            'progress': 'В РАБОТЕ'
+        };
+        
+        listEl.innerHTML = orders.map(o => {
+            const date = new Date(o.created_at);
+            const dateStr = date.toLocaleDateString('ru-RU', { 
+                day: '2-digit', month: '2-digit', year: '2-digit',
+                hour: '2-digit', minute: '2-digit'
+            });
+            
+            let desc = '';
+            if (o.type === 'item') {
+                desc = escapeHTML(o.item || '');
+                if (o.quantity) desc += ` (${escapeHTML(o.quantity)})`;
+            } else if (o.type === 'shelf') {
+                desc = escapeHTML(o.shelf_info || '');
+            } else if (o.type === 'logistics') {
+                desc = `${escapeHTML(o.logistics_from || '?')} → ${escapeHTML(o.logistics_to || '?')}`;
+            }
+            
+            return `
+                <div class="order-item">
+                    <div class="order-item-head">
+                        <span class="order-item-type">${typeLabels[o.type] || '📦 ЗАКАЗ'} #${o.id}</span>
+                        <span class="order-item-status ${o.status}">${statusLabels[o.status] || o.status}</span>
+                    </div>
+                    <div class="order-item-nickname">${escapeHTML(o.nickname)}</div>
+                    <div class="order-item-desc">${desc}</div>
+                    <div class="order-item-meta">${dateStr}</div>
+                </div>
+            `;
+        }).join('');
+        
+    } catch (e) {
+        console.error('Ошибка загрузки заказов:', e);
+        listEl.innerHTML = '<p class="orders-empty" style="color: #ff5555;">Ошибка загрузки заказов</p>';
     }
-});
+}
+
+// Явно экспортируем в глобальную область
+window.loadOrders = loadOrders;
     </script>
 </body>
 </html>
