@@ -986,6 +986,41 @@ body {
             opacity: 0.5;
             margin-top: 0.5rem;
         }
+    /* ============================================================
+   КАРТОЧКА ПАРТНЁРА (для организаций)
+   ============================================================ */
+.partner-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.partner-title-block {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    flex: 1;
+}
+
+.partner-logo {
+    width: 4.5rem;
+    height: 4.5rem;
+    border: 2px solid var(--accent);
+    background: #000;
+    object-fit: cover;
+    image-rendering: pixelated;
+    flex-shrink: 0;
+}
+
+/* Партнёрская карточка в списке */
+.member-partner {
+    border-left-color: #c78a8a;
+}
+
+.member-partner .member-role {
+    color: #c78a8a;
+}
     </style>
 </head>
 <body>
@@ -1485,24 +1520,25 @@ body {
             }
         }
         
-  function renderMember(m, isPartner = false) {
-    // Если есть картинка (аватар) — используем её, иначе — голова скинa
+ function renderMember(m, isPartner = false) {
     let avatarSrc;
-    if (m.avatar && !m.avatar.startsWith('http')) {
-        // Локальный файл (например, gf.jpg)
+    if (m.avatar) {
         avatarSrc = m.avatar;
-    } else if (m.avatar) {
-        // Внешний URL
-        avatarSrc = m.avatar;
+    } else if (isPartner) {
+        avatarSrc = 'logo.jpg';
     } else {
-        // Fallback: голова скина
         avatarSrc = `https://minotar.net/helm/${encodeURIComponent(m.name)}/64`;
     }
     
+    const onclickFn = isPartner ? 'openPartner' : 'openMember';
+    const id = m.id || m.name;
+    
     return `
-        <div class="member" onclick="openMember('${m.id || m.name}', ${isPartner})" style="cursor: pointer;">
+        <div class="member ${isPartner ? 'member-partner' : ''}" 
+             onclick="${onclickFn}('${id}')" 
+             style="cursor: pointer;">
             <img src="${avatarSrc}" class="member-head" 
-                 onerror="this.src='https://minotar.net/helm/${encodeURIComponent(m.name)}/64'" 
+                 onerror="this.src='${isPartner ? 'logo.jpg' : 'https://minotar.net/helm/' + encodeURIComponent(m.name) + '/64'}'" 
                  alt="${escapeHTML(m.name)}">
             <div class="member-info">
                 <span class="member-name">${escapeHTML(m.name)}</span>
@@ -1511,7 +1547,6 @@ body {
         </div>
     `;
 }
-
         
         // ============================================================
         // МОДАЛКА: ПРОЕКТ
@@ -1797,11 +1832,10 @@ body {
             loadObjects();
             loadTeam();
         });
-    // ============================================================
-// МОДАЛКА: ЛИЧНОЕ ДЕЛО УЧАСТНИКА
+// ============================================================
+// МОДАЛКА: ЛИЧНОЕ ДЕЛО УЧАСТНИКА (для людей)
 // ============================================================
 async function openMember(id, isPartner = false) {
-    // Загружаем данные команды заново (или используем кэш)
     let team = window.cachedTeam;
     if (!team) {
         try {
@@ -1815,36 +1849,29 @@ async function openMember(id, isPartner = false) {
         }
     }
     
-    // Ищем участника во всех категориях
-    const allMembers = [
+    // Ищем участника ТОЛЬКО среди людей (не организаций)
+    const allPeople = [
         ...(team.leadership || []),
         ...(team.staff || []),
-        ...(team.members || []),
-        ...(team.partners || [])
+        ...(team.members || [])
     ];
     
-    const m = allMembers.find(x => (x.id || x.name) === id);
+    const m = allPeople.find(x => (x.id || x.name) === id);
     if (!m) return;
     
-    // Определяем аватар
+    // Аватар
     let avatarSrc;
-    if (m.avatar && !m.avatar.startsWith('http')) {
-        avatarSrc = m.avatar;
-    } else if (m.avatar) {
+    if (m.avatar) {
         avatarSrc = m.avatar;
     } else {
         avatarSrc = `https://minotar.net/armor/bust/${encodeURIComponent(m.name)}/200`;
     }
     
-    // Определяем тип (сотрудник или партнёр)
-    const isOrg = isPartner || (team.partners || []).some(p => (p.id || p.name) === id);
-    const docType = isOrg ? 'КАРТОЧКА ПАРТНЁРА' : 'ЛИЧНОЕ ДЕЛО';
-    
     let html = `
         <div class="doc-head">
             <div>
                 <div class="doc-title">${escapeHTML(m.name)}</div>
-                <div class="doc-subtitle">${escapeHTML(m.role || '')} · ${docType}</div>
+                <div class="doc-subtitle">${escapeHTML(m.role || '')} · ЛИЧНОЕ ДЕЛО</div>
             </div>
             <span class="doc-stamp">${escapeHTML(m.statusLabel || 'АКТИВЕН')}</span>
         </div>
@@ -1919,7 +1946,7 @@ async function openMember(id, isPartner = false) {
         `;
     }
     
-    // Заметка
+    // Примечание
     if (m.note) {
         html += `
             <div class="doc-section">
@@ -1946,7 +1973,7 @@ async function openMember(id, isPartner = false) {
         `;
     }
     
-    // Подпись — кто принял
+    // Кто принял
     if (m.acceptedBy && m.acceptedBy !== '—') {
         html += `
             <div class="doc-signature">
@@ -1957,10 +1984,169 @@ async function openMember(id, isPartner = false) {
         `;
     }
     
-    // Подпись директора (для всех)
+    // Подпись директора
     html += `
         <div class="doc-signature">
             <div class="signature-label">ПОДПИСЬ ГЕНЕРАЛЬНОГО ДИРЕКТОРА:</div>
+            <div class="signature-value">Folksy13_dll</div>
+            <div class="signature-line"></div>
+        </div>
+    `;
+    
+    document.getElementById('modalBody').innerHTML = html;
+    document.getElementById('docModal').classList.add('show');
+}
+
+// ============================================================
+// МОДАЛКА: КАРТОЧКА ПАРТНЁРА (для организаций)
+// ============================================================
+async function openPartner(id) {
+    let team = window.cachedTeam;
+    if (!team) {
+        try {
+            const res = await fetch('data/team.json?v=' + Date.now());
+            const data = await res.json();
+            team = data.team || {};
+            window.cachedTeam = team;
+        } catch (e) {
+            console.error('Ошибка загрузки команды:', e);
+            return;
+        }
+    }
+    
+    // Ищем организацию ТОЛЬКО среди партнёров
+    const partners = team.partners || [];
+    const p = partners.find(x => (x.id || x.name) === id);
+    if (!p) return;
+    
+    // Логотип организации
+    const logo = p.avatar || p.logo || 'logo.jpg';
+    
+    let html = `
+        <div class="doc-head partner-head">
+            <div class="partner-title-block">
+                <img src="${escapeHTML(logo)}" class="partner-logo" 
+                     onerror="this.src='logo.jpg'" 
+                     alt="${escapeHTML(p.name)}">
+                <div>
+                    <div class="doc-title">${escapeHTML(p.name)}</div>
+                    <div class="doc-subtitle">${escapeHTML(p.role || 'Партнёр')} · КАРТОЧКА ПАРТНЁРА</div>
+                </div>
+            </div>
+            <span class="doc-stamp">${escapeHTML(p.statusLabel || 'ПАРТНЁР')}</span>
+        </div>
+        
+        <div class="doc-meta-grid">
+            <div class="doc-meta-item">
+                <div class="doc-meta-label">ТИП</div>
+                <div class="doc-meta-value">${escapeHTML(p.type || 'Организация')}</div>
+            </div>
+            ${p.direction ? `
+                <div class="doc-meta-item">
+                    <div class="doc-meta-label">НАПРАВЛЕНИЕ</div>
+                    <div class="doc-meta-value">${escapeHTML(p.direction)}</div>
+                </div>
+            ` : ''}
+            ${p.joinedDate ? `
+                <div class="doc-meta-item">
+                    <div class="doc-meta-label">СОТРУДНИЧЕСТВО С</div>
+                    <div class="doc-meta-value">${escapeHTML(p.joinedDate)}</div>
+                </div>
+            ` : ''}
+            ${p.status ? `
+                <div class="doc-meta-item">
+                    <div class="doc-meta-label">СТАТУС ОТНОШЕНИЙ</div>
+                    <div class="doc-meta-value">${escapeHTML(p.relationship || p.status)}</div>
+                </div>
+            ` : ''}
+        </div>
+    `;
+    
+    // Описание / миссия
+    if (p.description || p.mission) {
+        html += `
+            <div class="doc-section">
+                <div class="doc-section-title">ОПИСАНИЕ</div>
+                <div class="doc-section-text">${escapeHTML(p.description || p.mission)}</div>
+            </div>
+        `;
+    }
+    
+    // История отношений
+    if (p.biography || p.relationship_history) {
+        html += `
+            <div class="doc-section">
+                <div class="doc-section-title">ИСТОРИЯ ОТНОШЕНИЙ</div>
+                <div class="doc-section-text">${escapeHTML(p.biography || p.relationship_history)}</div>
+            </div>
+        `;
+    }
+    
+    // Представители со стороны партнёра
+    if (p.representatives && p.representatives.length > 0) {
+        html += `
+            <div class="doc-section">
+                <div class="doc-section-title">ПРЕДСТАВИТЕЛИ ОРГАНИЗАЦИИ</div>
+                <div class="doc-list">
+                    ${p.representatives.map(r => `
+                        <div class="doc-list-item">
+                            <strong>${escapeHTML(r.name)}</strong>
+                            ${escapeHTML(r.role || '')}
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+    }
+    
+    // Наши контакты в организации
+    if (p.ourContacts && p.ourContacts.length > 0) {
+        html += `
+            <div class="doc-section">
+                <div class="doc-section-title">НАШИ КОНТАКТЫ В ОРГАНИЗАЦИИ</div>
+                <div class="doc-list">
+                    ${p.ourContacts.map(c => `
+                        <div class="doc-list-item">
+                            <strong>${escapeHTML(c.name)}</strong>
+                            ${escapeHTML(c.role || '')}
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+    }
+    
+    // Примечание
+    if (p.note) {
+        html += `
+            <div class="doc-section">
+                <div class="doc-section-title">ПРИМЕЧАНИЕ</div>
+                <div class="doc-notes">${escapeHTML(p.note)}</div>
+            </div>
+        `;
+    }
+    
+    // Контакты / ссылки
+    if (p.socials && p.socials.length > 0) {
+        html += `
+            <div class="doc-section">
+                <div class="doc-section-title">КОНТАКТЫ И РЕСУРСЫ</div>
+                <div class="member-socials">
+                    ${p.socials.map(s => `
+                        <a href="${escapeHTML(s.url)}" target="_blank" rel="noopener" class="member-social-link">
+                            <span class="social-platform">${escapeHTML(s.platform)}</span>
+                            <span class="social-url">${escapeHTML(s.url)}</span>
+                        </a>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+    }
+    
+    // Подпись
+    html += `
+        <div class="doc-signature">
+            <div class="signature-label">СОГЛАСОВАНО С ГЕНЕРАЛЬНЫМ ДИРЕКТОРОМ:</div>
             <div class="signature-value">Folksy13_dll</div>
             <div class="signature-line"></div>
         </div>
