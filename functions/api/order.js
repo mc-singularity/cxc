@@ -1,14 +1,15 @@
 export async function onRequestGet(context) {
     const { env } = context;
-    
+    const location = String(data.location || '').trim().slice(0, 50);
+    const deadline = String(data.deadline || '').trim().slice(0, 100);
     try {
         const { results } = await env.DB.prepare(`
-            SELECT id, type, nickname, item, quantity, shelf_info,
-                   logistics_from, logistics_to, status, created_at
-            FROM orders
-            WHERE status IN ('new', 'progress')
-            ORDER BY created_at DESC
-            LIMIT 50
+SELECT id, type, nickname, item, quantity, shelf_info,
+       logistics_from, logistics_to, status, location, deadline, created_at
+FROM orders
+WHERE status IN ('new', 'progress')
+ORDER BY created_at DESC
+LIMIT 50
         `).all();
         
         return new Response(JSON.stringify({ 
@@ -53,16 +54,18 @@ export async function onRequestPost(context) {
         if (data.website) return jsonResponse({ success: true }, 200);
         
         const now = Date.now();
-        
         const result = await env.DB.prepare(`
-            INSERT INTO orders 
-            (type, nickname, contact, item, quantity, shelf_info, logistics_from, logistics_to, comment, status, created_at, updated_at)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'new', ?, ?)
-        `).bind(
-            type, nickname, contact, item || null, quantity || null,
-            shelfInfo || null, logisticsFrom || null, logisticsTo || null,
-            comment || null, now, now
-        ).run();
+    INSERT INTO orders 
+    (type, nickname, contact, item, quantity, shelf_info, 
+     logistics_from, logistics_to, comment, status, 
+     location, deadline, created_at, updated_at)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'new', ?, ?, ?, ?)
+`).bind(
+    type, nickname, contact, item || null, quantity || null,
+    shelfInfo || null, logisticsFrom || null, logisticsTo || null,
+    comment || null, location || null, deadline || null,
+    now, now
+).run();
         
         const orderId = result.meta.last_row_id;
         
