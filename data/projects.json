@@ -41,6 +41,8 @@
       "statusLabel": "ПЛАНИРУЕТСЯ",
       "shortDesc": "Главный представительский центр компании на спавне. Место зарезервировано.",
       "startDate": "2 сезон",
+        "link": "https://mc-singularity.github.io/site/",
+  "linkText": "ОТКРЫТЬ САЙТ",
       "responsible": "Folksy13_dll",
       "tags": ["строительство", "торговля"],
       "fullDocument": {
