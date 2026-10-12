@@ -1054,6 +1054,189 @@ body {
 .card-link-btn:hover .arrow {
     transform: translateX(3px);
 }
+                /* ============================================================
+           ФОРМЫ ЗАКАЗОВ И ЗАЯВОК
+           ============================================================ */
+        .order-form {
+            max-width: 42rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+        
+        .form-row {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+        
+        .form-row label {
+            font-size: 0.85rem;
+            color: var(--paper);
+            letter-spacing: 0.05rem;
+            font-family: 'uvKits', sans-serif !important;
+        }
+        
+        .form-row input,
+        .form-row textarea {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid var(--line);
+            color: #fff;
+            padding: 0.65rem 0.9rem;
+            font-size: 0.95rem;
+            font-family: 'uvKits', sans-serif !important;
+            outline: none;
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+        
+        .form-row input:focus,
+        .form-row textarea:focus {
+            border-color: var(--accent);
+            background: rgba(158, 96, 96, 0.08);
+            box-shadow: 0 0 10px var(--accent-glow);
+        }
+        
+        .form-row textarea {
+            min-height: 90px;
+            resize: vertical;
+        }
+        
+        .order-type-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+            gap: 0.5rem;
+        }
+        
+        .order-type-option {
+            display: block;
+            cursor: pointer;
+        }
+        
+        .order-type-option input {
+            display: none;
+        }
+        
+        .order-type-option span {
+            display: block;
+            padding: 0.7rem 1rem;
+            background: rgba(0, 0, 0, 0.4);
+            border: 2px solid var(--line);
+            color: var(--paper-dim);
+            text-align: center;
+            font-size: 0.82rem;
+            letter-spacing: 0.08rem;
+            font-family: 'uvKits', sans-serif !important;
+            transition: all 0.2s ease;
+        }
+        
+        .order-type-option input:checked + span {
+            background: var(--accent);
+            color: #000;
+            border-color: var(--accent);
+            box-shadow: 0 0 12px var(--accent-glow);
+        }
+        
+        .order-type-option:hover span {
+            border-color: var(--accent);
+            color: var(--paper);
+        }
+        
+        .order-type-option input:checked + span:hover {
+            color: #000;
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: center;
+            padding-top: 0.5rem;
+        }
+        
+        .form-status {
+            text-align: center;
+            font-size: 0.92rem;
+            min-height: 1.4rem;
+            margin-top: 0.5rem;
+            font-family: 'uvKits', sans-serif !important;
+        }
+        
+        .form-status.success { color: #55ff55; }
+        .form-status.error { color: #ff5555; }
+        
+        /* ============================================================
+           СПИСОК ЗАКАЗОВ
+           ============================================================ */
+        .orders-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        
+        .order-item {
+            padding: 1rem 1.2rem;
+            background: rgba(0, 0, 0, 0.4);
+            border-left: 3px solid var(--accent);
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+        
+        .order-item-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .order-item-type {
+            font-size: 0.75rem;
+            color: var(--accent);
+            letter-spacing: 0.1rem;
+            font-family: 'uvKits', sans-serif !important;
+        }
+        
+        .order-item-status {
+            font-size: 0.68rem;
+            padding: 0.2rem 0.5rem;
+            letter-spacing: 0.08rem;
+            font-family: 'uvKits', sans-serif !important;
+            font-weight: bold;
+        }
+        
+        .order-item-status.new { background: #55ff55; color: #000; }
+        .order-item-status.progress { background: #ffaa00; color: #000; }
+        .order-item-status.done { background: #666; color: #ccc; }
+        .order-item-status.cancelled { background: #ff5555; color: #fff; }
+        
+        .order-item-nickname {
+            font-size: 0.95rem;
+            color: #fff;
+            font-family: 'uvKits', sans-serif !important;
+        }
+        
+        .order-item-desc {
+            font-size: 0.85rem;
+            color: var(--paper);
+            opacity: 0.9;
+            line-height: 1.5;
+            font-family: 'uvKits', sans-serif !important;
+        }
+        
+        .order-item-meta {
+            font-size: 0.72rem;
+            color: var(--paper-dim);
+            font-family: 'uvKits', sans-serif !important;
+            letter-spacing: 0.05rem;
+        }
+        
+        .orders-empty {
+            text-align: center;
+            color: var(--paper-dim);
+            padding: 2rem;
+            font-size: 0.9rem;
+            font-family: 'uvKits', sans-serif !important;
+        }
     </style>
 </head>
 <body>
@@ -1071,14 +1254,13 @@ body {
                     <span class="brand-sub">INC. · ОФИЦИАЛЬНЫЙ ПОРТАЛ</span>
                 </div>
             </div>
-            
-            <nav class="nav">
-                <button class="nav-btn active" data-tab="overview">ОБЗОР</button>
-                <button class="nav-btn" data-tab="projects">ПРОЕКТЫ</button>
-                <button class="nav-btn" data-tab="objects">ОБЪЕКТЫ</button>
-                <button class="nav-btn" data-tab="team">КОМАНДА</button>
-            </nav>
-            
+<nav class="nav">
+    <button class="nav-btn active" data-tab="overview">ОБЗОР</button>
+    <button class="nav-btn" data-tab="projects">ПРОЕКТЫ</button>
+    <button class="nav-btn" data-tab="objects">ОБЪЕКТЫ</button>
+    <button class="nav-btn" data-tab="team">КОМАНДА</button>
+    <button class="nav-btn" data-tab="orders">ЗАКАЗЫ</button>
+</nav>
             <div class="status-dot">АКТИВНО</div>
         </div>
     </header>
@@ -1299,8 +1481,127 @@ body {
                     из текущей организации. Мы ищем людей, готовых исследовать, помогать 
                     и развивать сообщество вместе с нами.
                 </p>
-                <a href="https://t.me/CXCInc" target="_blank" class="btn">НАПИСАТЬ В TELEGRAM</a>
+                <button class="btn" onclick="openApplyModal()">ПОДАТЬ ЗАЯВКУ</button>
             </div>
+            
+        </div>
+        
+        <!-- ============================================================
+             ВКЛАДКА: ЗАКАЗЫ
+             ============================================================ -->
+        <div class="tab-content" id="tab-orders">
+            
+            <div class="hero">
+                <h1 class="hero-title">
+                    ТОРГОВЛЯ И<br>
+                    <span class="accent">ЛОГИСТИКА</span>
+                </h1>
+                <p class="hero-desc">
+                    Оформите заказ на товар, предложите свой товар для продажи 
+                    на наших полках или закажите доставку ресурсов на нужные 
+                    координаты. После отправки заказ появится в списке ниже.
+                </p>
+            </div>
+            
+            <!-- Форма заказа -->
+            <section class="section">
+                <div class="section-head">
+                    <span class="section-num">01</span>
+                    <h2 class="section-title">ОФОРМИТЬ ЗАКАЗ</h2>
+                    <span class="section-sub">УВЕДОМЛЕНИЕ В TELEGRAM</span>
+                </div>
+                
+                <form id="orderForm" class="order-form">
+                    <div class="form-row">
+                        <label>Тип заказа *</label>
+                        <div class="order-type-selector">
+                            <label class="order-type-option">
+                                <input type="radio" name="orderType" value="item" checked>
+                                <span>📦 ЗАКАЗАТЬ ТОВАР</span>
+                            </label>
+                            <label class="order-type-option">
+                                <input type="radio" name="orderType" value="shelf">
+                                <span>🏪 ПРОДАТЬ ЧЕРЕЗ ПОЛКУ</span>
+                            </label>
+                            <label class="order-type-option">
+                                <input type="radio" name="orderType" value="logistics">
+                                <span>🚚 ЛОГИСТИКА</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <label for="orderNickname">Ваш ник в Minecraft *</label>
+                        <input type="text" id="orderNickname" required maxlength="32" placeholder="Например, Folksy13_dll">
+                    </div>
+                    
+                    <div class="form-row">
+                        <label for="orderContact">Контакт для связи *</label>
+                        <input type="text" id="orderContact" required maxlength="100" placeholder="Telegram @username или Discord">
+                    </div>
+                    
+                    <!-- Поля для ЗАКАЗА ТОВАРА -->
+                    <div class="order-fields" data-type="item">
+                        <div class="form-row">
+                            <label for="orderItem">Что нужно *</label>
+                            <input type="text" id="orderItem" maxlength="200" placeholder="Например, 64 алмазных блока">
+                        </div>
+                        <div class="form-row">
+                            <label for="orderQuantity">Количество</label>
+                            <input type="text" id="orderQuantity" maxlength="20" placeholder="Например, 64">
+                        </div>
+                    </div>
+                    
+                    <!-- Поля для ПРОДАЖИ ЧЕРЕЗ ПОЛКУ -->
+                    <div class="order-fields" data-type="shelf" style="display:none;">
+                        <div class="form-row">
+                            <label for="orderShelfInfo">Что хотите продавать *</label>
+                            <textarea id="orderShelfInfo" maxlength="300" placeholder="Опишите товар, цену, объём"></textarea>
+                        </div>
+                    </div>
+                    
+                    <!-- Поля для ЛОГИСТИКИ -->
+                    <div class="order-fields" data-type="logistics" style="display:none;">
+                        <div class="form-row">
+                            <label for="orderLogFrom">Откуда доставить *</label>
+                            <input type="text" id="orderLogFrom" maxlength="200" placeholder="Координаты или описание">
+                        </div>
+                        <div class="form-row">
+                            <label for="orderLogTo">Куда доставить *</label>
+                            <input type="text" id="orderLogTo" maxlength="200" placeholder="Координаты или описание">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <label for="orderComment">Комментарий</label>
+                        <textarea id="orderComment" maxlength="500" placeholder="Дополнительные сведения, сроки, особые пожелания"></textarea>
+                    </div>
+                    
+                    <!-- Honeypot от ботов -->
+                    <input type="text" name="website" style="display:none !important" tabindex="-1" autocomplete="off">
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn" id="orderSubmitBtn">ОТПРАВИТЬ ЗАКАЗ</button>
+                    </div>
+                    
+                    <p id="orderFormStatus" class="form-status"></p>
+                </form>
+            </section>
+            
+            <!-- Список активных заказов -->
+            <section class="section">
+                <div class="section-head">
+                    <span class="section-num">02</span>
+                    <h2 class="section-title">АКТИВНЫЕ ЗАКАЗЫ</h2>
+                    <span class="section-sub" id="ordersCount"></span>
+                </div>
+                
+                <div id="ordersList" class="orders-list">
+                    <p style="color: var(--paper-dim); text-align: center; padding: 2rem;">
+                        Загрузка заказов...
+                    </p>
+                </div>
+            </section>
             
         </div>
         
@@ -1324,6 +1625,66 @@ body {
             <div id="modalBody"></div>
         </div>
     </div>
+        <!-- ============================================================
+         МОДАЛКА: ЗАЯВКА НА ПРИСОЕДИНЕНИЕ
+         ============================================================ -->
+    <div class="modal" id="applyModal" onclick="closeApplyModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeApplyModal()">✕</button>
+            
+            <div class="doc-head">
+                <div>
+                    <div class="doc-title">ЗАЯВКА</div>
+                    <div class="doc-subtitle">ВСТУПЛЕНИЕ В КОМПАНИЮ</div>
+                </div>
+                <span class="doc-stamp">ОТКРЫТО</span>
+            </div>
+            
+            <form id="applyForm" class="order-form">
+                <div class="form-row">
+                    <label>Тип заявки *</label>
+                    <div class="order-type-selector">
+                        <label class="order-type-option">
+                            <input type="radio" name="applyType" value="staff" checked>
+                            <span>👤 ВСТУПИТЬ В ШТАТ</span>
+                        </label>
+                        <label class="order-type-option">
+                            <input type="radio" name="applyType" value="partner">
+                            <span>🤝 ПАРТНЁРСТВО</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <label for="applyNickname">Ваш ник в Minecraft *</label>
+                    <input type="text" id="applyNickname" required maxlength="32" placeholder="Ваш игровой ник">
+                </div>
+                
+                <div class="form-row">
+                    <label for="applyContact">Контакт для связи *</label>
+                    <input type="text" id="applyContact" required maxlength="100" placeholder="Telegram @username или Discord">
+                </div>
+                
+                <div class="form-row">
+                    <label for="applySkills">Ваши навыки</label>
+                    <textarea id="applySkills" maxlength="500" placeholder="Что вы умеете: строительство, торговля, редстоун, исследования..."></textarea>
+                </div>
+                
+                <div class="form-row">
+                    <label for="applyMotivation">Почему хотите к нам</label>
+                    <textarea id="applyMotivation" maxlength="1000" placeholder="Расскажите о себе и о том, почему хотите присоединиться"></textarea>
+                </div>
+                
+                <input type="text" name="website" style="display:none !important" tabindex="-1" autocomplete="off">
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn" id="applySubmitBtn">ОТПРАВИТЬ ЗАЯВКУ</button>
+                </div>
+                
+                <p id="applyFormStatus" class="form-status"></p>
+            </form>
+        </div>
+    </div>
     
     <!-- ============================================================
          LIGHTBOX (для скриншотов)
@@ -1340,20 +1701,25 @@ body {
             const btns = document.querySelectorAll('.nav-btn');
             const contents = document.querySelectorAll('.tab-content');
             
-            btns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const tabId = btn.dataset.tab;
-                    
-                    btns.forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    
-                    contents.forEach(c => c.classList.remove('active'));
-                    const target = document.getElementById('tab-' + tabId);
-                    if (target) target.classList.add('active');
-                    
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                });
-            });
+btns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        const tabId = btn.dataset.tab;
+        
+        btns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        contents.forEach(c => c.classList.remove('active'));
+        const target = document.getElementById('tab-' + tabId);
+        if (target) target.classList.add('active');
+        
+        // Автозагрузка заказов при открытии вкладки
+        if (tabId === 'orders' && typeof loadOrders === 'function') {
+            loadOrders();
+        }
+        
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+});
         })();
         
         // ============================================================
@@ -2201,6 +2567,23 @@ async function openPartner(id) {
     document.getElementById('modalBody').innerHTML = html;
     document.getElementById('docModal').classList.add('show');
 }
+// ============================================================
+// АВТОЗАГРУЗКА ЗАКАЗОВ ПРИ ОТКРЫТИИ ВКЛАДКИ
+// ============================================================
+document.addEventListener('DOMContentLoaded', () => {
+    const ordersTabBtn = document.querySelector('.nav-btn[data-tab="orders"]');
+    if (ordersTabBtn) {
+        ordersTabBtn.addEventListener('click', () => {
+            loadOrders();
+        });
+    }
+    
+    // Если вкладка "ЗАКАЗЫ" активна при загрузке — грузим сразу
+    const activeTab = document.querySelector('.tab-content.active');
+    if (activeTab && activeTab.id === 'tab-orders') {
+        loadOrders();
+    }
+});
     </script>
 </body>
 </html>
