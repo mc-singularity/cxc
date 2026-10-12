@@ -2647,6 +2647,184 @@ async function loadOrders() {
 
 // Явно экспортируем в глобальную область
 window.loadOrders = loadOrders;
+        // ============================================================
+        // ФОРМА ЗАКАЗА
+        // ============================================================
+        (function setupOrderForm() {
+            const form = document.getElementById('orderForm');
+            if (!form) return;
+            
+            const typeRadios = form.querySelectorAll('input[name="orderType"]');
+            const fieldGroups = form.querySelectorAll('.order-fields');
+            const statusEl = document.getElementById('orderFormStatus');
+            const submitBtn = document.getElementById('orderSubmitBtn');
+            
+            // Переключение полей по типу
+            typeRadios.forEach(radio => {
+                radio.addEventListener('change', () => {
+                    const type = radio.value;
+                    fieldGroups.forEach(g => {
+                        g.style.display = g.dataset.type === type ? 'block' : 'none';
+                    });
+                });
+            });
+            
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const type = form.querySelector('input[name="orderType"]:checked').value;
+                const data = {
+                    type,
+                    nickname: document.getElementById('orderNickname').value.trim(),
+                    contact: document.getElementById('orderContact').value.trim(),
+                    item: document.getElementById('orderItem')?.value.trim() || '',
+                    quantity: document.getElementById('orderQuantity')?.value.trim() || '',
+                    shelf_info: document.getElementById('orderShelfInfo')?.value.trim() || '',
+                    logistics_from: document.getElementById('orderLogFrom')?.value.trim() || '',
+                    logistics_to: document.getElementById('orderLogTo')?.value.trim() || '',
+                    comment: document.getElementById('orderComment').value.trim(),
+                    website: form.querySelector('input[name="website"]').value
+                };
+                
+                if (!data.nickname || !data.contact) {
+                    return showStatus('Заполните ник и контакт', 'error');
+                }
+                
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'ОТПРАВЛЯЮ...';
+                statusEl.textContent = '';
+                statusEl.className = 'form-status';
+                
+                try {
+                    const response = await fetch('/api/order', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data)
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (response.ok && result.success) {
+                        showStatus('✅ Заказ отправлен! Ожидайте ответа в Telegram.', 'success');
+                        form.reset();
+                        document.querySelector('input[name="orderType"][value="item"]').checked = true;
+                        fieldGroups.forEach(g => {
+                            g.style.display = g.dataset.type === 'item' ? 'block' : 'none';
+                        });
+                        loadOrders();
+                    } else {
+                        showStatus('❌ ' + (result.error || 'Ошибка отправки'), 'error');
+                    }
+                } catch (err) {
+                    console.error(err);
+                    showStatus('❌ Не удалось отправить заказ', 'error');
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'ОТПРАВИТЬ ЗАКАЗ';
+                }
+            });
+            
+            function showStatus(msg, type) {
+                statusEl.textContent = msg;
+                statusEl.className = 'form-status ' + type;
+            }
+        })();
+        
+        // ============================================================
+        // ФОРМА ЗАЯВКИ
+        // ============================================================
+        (function setupApplyForm() {
+            const form = document.getElementById('applyForm');
+            if (!form) return;
+            
+            const statusEl = document.getElementById('applyFormStatus');
+            const submitBtn = document.getElementById('applySubmitBtn');
+            
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const type = form.querySelector('input[name="applyType"]:checked').value;
+                const data = {
+                    type,
+                    nickname: document.getElementById('applyNickname').value.trim(),
+                    contact: document.getElementById('applyContact').value.trim(),
+                    skills: document.getElementById('applySkills').value.trim(),
+                    motivation: document.getElementById('applyMotivation').value.trim(),
+                    website: form.querySelector('input[name="website"]').value
+                };
+                
+                if (!data.nickname || !data.contact) {
+                    return showStatus('Заполните ник и контакт', 'error');
+                }
+                
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'ОТПРАВЛЯЮ...';
+                statusEl.textContent = '';
+                statusEl.className = 'form-status';
+                
+                try {
+                    const response = await fetch('/api/apply', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data)
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (response.ok && result.success) {
+                        showStatus('✅ Заявка отправлена! Мы свяжемся с вами в Telegram.', 'success');
+                        form.reset();
+                        setTimeout(() => closeApplyModal(), 2500);
+                    } else {
+                        showStatus('❌ ' + (result.error || 'Ошибка отправки'), 'error');
+                    }
+                } catch (err) {
+                    console.error(err);
+                    showStatus('❌ Не удалось отправить заявку', 'error');
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'ОТПРАВИТЬ ЗАЯВКУ';
+                }
+            });
+            
+            function showStatus(msg, type) {
+                statusEl.textContent = msg;
+                statusEl.className = 'form-status ' + type;
+            }
+        })();
+        
+        // ============================================================
+        // МОДАЛКА ЗАЯВКИ
+        // ============================================================
+        function openApplyModal() {
+            document.getElementById('applyModal').classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeApplyModal(e) {
+            if (!e || e.target.id === 'applyModal' || e.target.classList.contains('modal-close')) {
+                document.getElementById('applyModal').classList.remove('show');
+                document.body.style.overflow = '';
+            }
+        }
+        
+        // Escape закрывает модалку заявки
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const applyModal = document.getElementById('applyModal');
+                if (applyModal && applyModal.classList.contains('show')) {
+                    applyModal.classList.remove('show');
+                    document.body.style.overflow = '';
+                }
+            }
+        });
+        
+        // Экспорт функций заявки
+        window.openApplyModal = openApplyModal;
+        window.closeApplyModal = closeApplyModal;
+
+// Явно экспортируем в глобальную область
+window.loadOrders = loadOrders;
     </script>
 </body>
 </html>
