@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ-панель · Суньхуньсяй Inc.</title>
+    <link rel="icon" type="image/jpg" href="logo.jpg">
+    <style>
+        :root {
+            --accent: #9e6060;
+            --accent-bright: #c78a8a;
+            --paper: #d9d4d4;
+            --paper-dim: #8a8585;
+            --bg-deep: #0a0a0a;
+            --bg-mid: #121215;
+            --line: rgba(158, 96, 96, 0.25);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'uvKits', monospace;
+            background: var(--bg-deep);
+            color: var(--paper);
+            padding: 2rem;
+            line-height: 1.6;
+        }
+        h1 { color: var(--accent); margin-bottom: 1.5rem; letter-spacing: 0.1rem; }
+        .toolbar { margin-bottom: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .filter-btn {
+            background: transparent; color: var(--paper-dim);
+            border: 1px solid var(--line); padding: 0.4rem 0.9rem;
+            cursor: pointer; font-family: inherit; font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--accent); color: #000; border-color: var(--accent);
+        }
+        .order {
+            background: var(--bg-mid); border-left: 3px solid var(--accent);
+            padding: 1rem 1.2rem; margin-bottom: 0.8rem;
+        }
+        .order-head {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 0.5rem; flex-wrap: wrap; gap: 0.5rem;
+        }
+        .order-id { color: var(--accent); font-weight: bold; }
+        .order-nick { color: #fff; font-size: 1.1rem; }
+        .order-status {
+            padding: 0.2rem 0.6rem; font-size: 0.75rem; font-weight: bold;
+        }
+        .order-status.new { background: #55ff55; color: #000; }
+        .order-status.progress { background: #ffaa00; color: #000; }
+        .order-status.done { background: #666; color: #ccc; }
+        .order-status.cancelled { background: #ff5555; color: #fff; }
+        .order-body { margin: 0.5rem 0; }
+        .order-body div { margin: 0.2rem 0; font-size: 0.9rem; }
+        .order-body strong { color: var(--accent); }
+        .order-actions { display: flex; gap: 0.4rem; margin-top: 0.8rem; flex-wrap: wrap; }
+        .order-actions button {
+            background: transparent; color: var(--paper);
+            border: 1px solid var(--line); padding: 0.4rem 0.8rem;
+            cursor: pointer; font-family: inherit; font-size: 0.8rem;
+            transition: all 0.2s;
+        }
+        .order-actions button:hover { background: var(--accent); color: #000; }
+        .order-actions button.active { background: var(--accent); color: #000; }
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--bg-deep); }
+        ::-webkit-scrollbar-thumb { background: var(--accent); }
+    </style>
+</head>
+<body>
+    <h1>🔧 АДМИН-ПАНЕЛЬ · ЗАКАЗЫ</h1>
+    
+    <div class="toolbar">
+        <button class="filter-btn active" data-filter="all">Все</button>
+        <button class="filter-btn" data-filter="new">Новые</button>
+        <button class="filter-btn" data-filter="progress">В работе</button>
+        <button class="filter-btn" data-filter="done">Готово</button>
+        <button class="filter-btn" data-filter="cancelled">Отменено</button>
+    </div>
+    
+    <div id="orders">Загрузка...</div>
+    
+    <script>
+        let allOrders = [];
+        let currentFilter = 'all';
+        
+        async function loadOrders() {
+            try {
+                const res = await fetch('/api/admin/orders?v=' + Date.now());
+                const data = await res.json();
+                if (!data.success) throw new Error(data.error);
+                allOrders = data.orders || [];
+                render();
+            } catch (e) {
+                document.getElementById('orders').innerHTML = 
+                    '<p style="color:#ff5555">Ошибка: ' + e.message + '</p>';
+            }
+        }
+        
+        function render() {
+            const filtered = currentFilter === 'all' 
+                ? allOrders 
+                : allOrders.filter(o => o.status === currentFilter);
+            
+            const container = document.getElementById('orders');
+            
+            if (filtered.length === 0) {
+                container.innerHTML = '<p style="color:#888">Заказов нет</p>';
+                return;
+            }
+            
+            const typeLabels = {
+                item: '📦 ТОВАР',
+                shelf: '🏪 ПОЛКА',
+                logistics: '🚚 ЛОГИСТИКА'
+            };
+            
+            container.innerHTML = filtered.map(o => {
+                const date = new Date(o.created_at).toLocaleString('ru-RU');
+                return `
+                    <div class="order">
+                        <div class="order-head">
+                            <span class="order-id">#${o.id} · ${typeLabels[o.type] || o.type}</span>
+                            <span class="order-status ${o.status}">${o.status.toUpperCase()}</span>
+                        </div>
+                        <div class="order-body">
+                            <div><strong>Ник:</strong> ${escapeHTML(o.nickname)}</div>
+                            <div><strong>Контакт:</strong> ${escapeHTML(o.contact)}</div>
+                            ${o.item ? `<div><strong>Товар:</strong> ${escapeHTML(o.item)}</div>` : ''}
+                            ${o.quantity ? `<div><strong>Количество:</strong> ${escapeHTML(o.quantity)}</div>` : ''}
+                            ${o.shelf_info ? `<div><strong>Товар на полке:</strong> ${escapeHTML(o.shelf_info)}</div>` : ''}
+                            ${o.logistics_from ? `<div><strong>Откуда:</strong> ${escapeHTML(o.logistics_from)}</div>` : ''}
+                            ${o.logistics_to ? `<div><strong>Куда:</strong> ${escapeHTML(o.logistics_to)}</div>` : ''}
+                            ${o.location ? `<div><strong>Точка:</strong> ${escapeHTML(o.location)}</div>` : ''}
+                            ${o.deadline ? `<div><strong>Срок:</strong> ${escapeHTML(o.deadline)}</div>` : ''}
+                            ${o.comment ? `<div><strong>Комментарий:</strong> ${escapeHTML(o.comment)}</div>` : ''}
+                            <div style="color:#888;font-size:0.8rem;margin-top:0.5rem">${date}</div>
+                        </div>
+                        <div class="order-actions">
+                            <button onclick="setStatus(${o.id}, 'new')" class="${o.status === 'new' ? 'active' : ''}">Новый</button>
+                            <button onclick="setStatus(${o.id}, 'progress')" class="${o.status === 'progress' ? 'active' : ''}">В работе</button>
+                            <button onclick="setStatus(${o.id}, 'done')" class="${o.status === 'done' ? 'active' : ''}">Готово</button>
+                            <button onclick="setStatus(${o.id}, 'cancelled')" class="${o.status === 'cancelled' ? 'active' : ''}">Отменить</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        async function setStatus(id, status) {
+            try {
+                const res = await fetch('/api/admin/orders', {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id, status })
+                });
+                const data = await res.json();
+                if (!data.success) throw new Error(data.error);
+                
+                // Обновляем локально
+                const order = allOrders.find(o => o.id === id);
+                if (order) order.status = status;
+                render();
+            } catch (e) {
+                alert('Ошибка: ' + e.message);
+            }
+        }
+        
+        function escapeHTML(str) {
+            return String(str || '').replace(/[&<>"']/g, c => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+            }[c]));
+        }
+        
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentFilter = btn.dataset.filter;
+                render();
+            });
+        });
+        
+        loadOrders();
+    </script>
+</body>
+</html>
