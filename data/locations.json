@@ -6,7 +6,7 @@
       "nameFull": "МФК «新曙光» [Новый рассвет]",
       "type": "Главный офис",
       "status": "construction",
-      "description": "Основная база компании. Трейдхолл, торговая зона и жилой комплекс.",
+      "description": "Один из филлиалов компании. Трейдхолл, торговая зона и жилой комплекс.",
       "availableServices": ["item", "shelf", "logistics"],
       "coordinates": "Засекречено",
       "contact": "@CXCInc"
