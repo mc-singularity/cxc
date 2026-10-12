@@ -1,8 +1,8 @@
 {
   "projects": [
     {
-      "id": "yuntai",
-      "title": "МФК «Юньтай»",
+      "id": "xin-de-limin",
+      "title": "МФК «新曙光» [xīn de límín - Новый рассвет]",
       "subtitle": "Многофункциональный комплекс",
       "status": "ongoing",
       "statusLabel": "РЕКОНСТРУКЦИЯ",
@@ -27,8 +27,8 @@
           }
         ],
         "screenshots": [
-          "images/projects/yuntai-1.png",
-          "images/projects/yuntai-2.png"
+          "images/projects/xin-de-limin-1.png",
+          "images/projects/xin-de-limin-2.png"
         ],
         "notes": "Первая часть защитного забора уже возведена. Работы продолжаются."
       }
