@@ -1237,6 +1237,78 @@ body {
             font-size: 0.9rem;
             font-family: 'uvKits', sans-serif !important;
         }
+        .form-row select {
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid var(--line);
+    color: #fff;
+    padding: 0.65rem 0.9rem;
+    font-size: 0.95rem;
+    font-family: 'uvKits', sans-serif !important;
+    outline: none;
+    transition: all 0.2s ease;
+    width: 100%;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%239e6060' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.5rem;
+}
+
+.form-row select:focus {
+    border-color: var(--accent);
+    background-color: rgba(158, 96, 96, 0.08);
+    box-shadow: 0 0 10px var(--accent-glow);
+}
+
+.form-row select option {
+    background: var(--bg-mid);
+    color: var(--paper);
+    padding: 0.5rem;
+}
+
+.form-hint {
+    font-size: 0.75rem;
+    color: var(--paper-dim);
+    margin-top: 0.3rem;
+    font-family: 'uvKits', sans-serif !important;
+    line-height: 1.5;
+    min-height: 1rem;
+}
+
+/* Кастомный скроллбар для всего сайта */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-deep);
+    border-left: 1px solid var(--line);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--accent);
+    border: 2px solid var(--bg-deep);
+    background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-bright);
+    border: 2px solid var(--bg-deep);
+    background-clip: padding-box;
+    box-shadow: 0 0 8px var(--accent-glow);
+}
+
+::-webkit-scrollbar-corner {
+    background: var(--bg-deep);
+}
+
+/* Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent) var(--bg-deep);
+}
     </style>
 </head>
 <body>
@@ -1512,6 +1584,28 @@ body {
                 </div>
                 
                 <form id="orderForm" class="order-form">
+                    <!-- Выбор локации -->
+<div class="form-row">
+    <label for="orderLocation">Точка получения / откуда *</label>
+    <select id="orderLocation" required>
+        <option value="">— Загрузка локаций... —</option>
+    </select>
+    <div class="form-hint" id="locationHint"></div>
+</div>
+
+<!-- Срок -->
+<div class="form-row">
+    <label for="orderDeadline">Желаемый срок</label>
+    <select id="orderDeadline">
+        <option value="">Без срочности</option>
+        <option value="today">Сегодня</option>
+        <option value="tomorrow">В течение дня</option>
+        <option value="3days">В течение 3 дней</option>
+        <option value="week">На этой неделе</option>
+        <option value="weekend">К выходным</option>
+        <option value="custom">Укажу в комментарии</option>
+    </select>
+</div>
                     <div class="form-row">
                         <label>Тип заказа *</label>
                         <div class="order-type-selector">
@@ -2242,6 +2336,8 @@ window.addEventListener('DOMContentLoaded', () => {
     loadProjects();
     loadObjects();
     loadTeam();
+    loadLocations();
+    setupLocationHint();
     
     const activeTab = document.querySelector('.tab-content.active');
     if (activeTab && activeTab.id === 'tab-orders') {
@@ -2625,7 +2721,20 @@ async function loadOrders() {
             } else if (o.type === 'logistics') {
                 desc = `${escapeHTML(o.logistics_from || '?')} → ${escapeHTML(o.logistics_to || '?')}`;
             }
-            
+            // Локация
+const loc = allLocations.find(l => l.id === o.location);
+const locLabel = loc ? loc.name : (o.location || '—');
+
+// Срок
+const deadlineLabels = {
+    'today': 'сегодня',
+    'tomorrow': 'завтра',
+    '3days': '3 дня',
+    'week': 'на неделе',
+    'weekend': 'к выходным',
+    'custom': 'в комментарии'
+};
+const deadlineLabel = o.deadline ? deadlineLabels[o.deadline] || o.deadline : null;
             return `
                 <div class="order-item">
                     <div class="order-item-head">
@@ -2647,6 +2756,55 @@ async function loadOrders() {
 
 // Явно экспортируем в глобальную область
 window.loadOrders = loadOrders;
+        // ============================================================
+// ЗАГРУЗКА ЛОКАЦИЙ
+// ============================================================
+let allLocations = [];
+
+async function loadLocations() {
+    try {
+        const res = await fetch('data/locations.json?v=' + Date.now());
+        if (!res.ok) throw new Error('locations.json не найден');
+        const data = await res.json();
+        allLocations = data.locations || [];
+        
+        const select = document.getElementById('orderLocation');
+        if (!select) return;
+        
+        // Заполняем select
+        select.innerHTML = '<option value="">— Выберите точку —</option>' +
+            allLocations.map(loc => {
+                const statusIcon = loc.status === 'active' ? '' : 
+                                  loc.status === 'construction' ? ' ⚒' : ' ⏳';
+                return `<option value="${escapeHTML(loc.id)}">${escapeHTML(loc.name)}${statusIcon}</option>`;
+            }).join('');
+    } catch (e) {
+        console.error('Ошибка загрузки локаций:', e);
+        const select = document.getElementById('orderLocation');
+        if (select) {
+            select.innerHTML = '<option value="">Ошибка загрузки</option>';
+        }
+    }
+}
+
+// Показ подсказки при выборе локации
+function setupLocationHint() {
+    const select = document.getElementById('orderLocation');
+    const hint = document.getElementById('locationHint');
+    if (!select || !hint) return;
+    
+    select.addEventListener('change', () => {
+        const loc = allLocations.find(l => l.id === select.value);
+        if (!loc) {
+            hint.textContent = '';
+            return;
+        }
+        
+        const statusLabel = loc.status === 'active' ? 'Активна' :
+                           loc.status === 'construction' ? 'Строится' : 'Планируется';
+        hint.innerHTML = `${escapeHTML(loc.description)}<br><span style="color: var(--accent);">Координаты:</span> ${escapeHTML(loc.coordinates)} · <span style="color: var(--accent);">Статус:</span> ${statusLabel}`;
+    });
+}
         // ============================================================
         // ФОРМА ЗАКАЗА
         // ============================================================
@@ -2673,22 +2831,27 @@ window.loadOrders = loadOrders;
                 e.preventDefault();
                 
                 const type = form.querySelector('input[name="orderType"]:checked').value;
-                const data = {
-                    type,
-                    nickname: document.getElementById('orderNickname').value.trim(),
-                    contact: document.getElementById('orderContact').value.trim(),
-                    item: document.getElementById('orderItem')?.value.trim() || '',
-                    quantity: document.getElementById('orderQuantity')?.value.trim() || '',
-                    shelf_info: document.getElementById('orderShelfInfo')?.value.trim() || '',
-                    logistics_from: document.getElementById('orderLogFrom')?.value.trim() || '',
-                    logistics_to: document.getElementById('orderLogTo')?.value.trim() || '',
-                    comment: document.getElementById('orderComment').value.trim(),
-                    website: form.querySelector('input[name="website"]').value
-                };
+const data = {
+    type,
+    nickname: document.getElementById('orderNickname').value.trim(),
+    contact: document.getElementById('orderContact').value.trim(),
+    item: document.getElementById('orderItem')?.value.trim() || '',
+    quantity: document.getElementById('orderQuantity')?.value.trim() || '',
+    shelf_info: document.getElementById('orderShelfInfo')?.value.trim() || '',
+    logistics_from: document.getElementById('orderLogFrom')?.value.trim() || '',
+    logistics_to: document.getElementById('orderLogTo')?.value.trim() || '',
+    location: document.getElementById('orderLocation').value,
+    deadline: document.getElementById('orderDeadline').value,
+    comment: document.getElementById('orderComment').value.trim(),
+    website: form.querySelector('input[name="website"]').value
+};
                 
                 if (!data.nickname || !data.contact) {
                     return showStatus('Заполните ник и контакт', 'error');
                 }
+                if (!data.location) {
+    return showStatus('Выберите точку получения', 'error');
+}
                 
                 submitBtn.disabled = true;
                 submitBtn.textContent = 'ОТПРАВЛЯЮ...';
