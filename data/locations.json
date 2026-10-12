@@ -1,0 +1,48 @@
+{
+  "locations": [
+    {
+      "id": "xin-de-limin",
+      "name": "МФК «新曙光»",
+      "nameFull": "МФК «新曙光» [Новый рассвет]",
+      "type": "Главный офис",
+      "status": "construction",
+      "description": "Основная база компании. Трейдхолл, торговая зона и жилой комплекс.",
+      "availableServices": ["item", "shelf", "logistics"],
+      "coordinates": "Засекречено",
+      "contact": "@CXCInc"
+    },
+    {
+      "id": "spawn-point",
+      "name": "Точка на спавне",
+      "nameFull": "Торгово-представительский центр на спавне",
+      "type": "Торговая точка",
+      "status": "planned",
+      "description": "Будущая главная торговая площадка компании.",
+      "availableServices": ["item", "shelf"],
+      "coordinates": "Спавн, зарезервировано",
+      "contact": "@CXCInc"
+    },
+    {
+      "id": "hand-to-hand",
+      "name": "Из рук в руки",
+      "nameFull": "Личная передача без привязки к точке",
+      "type": "Вне локации",
+      "status": "active",
+      "description": "Передача ресурсов напрямую между сотрудником и клиентом в любом месте.",
+      "availableServices": ["item", "logistics"],
+      "coordinates": "Обсуждается индивидуально",
+      "contact": "@CXCInc"
+    },
+    {
+      "id": "coordinates",
+      "name": "По координатам",
+      "nameFull": "Доставка или забор по указанным координатам",
+      "type": "Вне локации",
+      "status": "active",
+      "description": "Укажите точные координаты — мы приедем или заберём оттуда.",
+      "availableServices": ["logistics"],
+      "coordinates": "Указывается в комментарии",
+      "contact": "@CXCInc"
+    }
+  ]
+}
