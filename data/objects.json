@@ -1,8 +1,9 @@
 {
   "objects": [
+    {
       "id": "xin-de-limin",
       "name": "МФК «新曙光»",
-      "nameFull": "МФК «新曙光» [Новый рассвет]"
+      "nameFull": "МФК «新曙光» [Новый рассвет]",
       "type": "Многофункциональный комплекс",
       "status": "construction",
       "statusLabel": "РЕКОНСТРУКЦИЯ",
