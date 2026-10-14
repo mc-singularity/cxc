@@ -22,26 +22,26 @@
         ]
       }
     ],
-    "staff": [],
-    "members": [
+    "staff": [
       {
-        "id": "ludoman",
+        "id": "thenday",
         "name": "TheNDay",
         "realName": "Хентай",
-        "role": "Лудоман - Основная рабочая сила",
-        "avatar": "",
+        "role": "Лудоман — Основная рабочая сила",
+        "avatar": "https://minotar.net/armor/bust/TheNDay/120",
         "status": "active",
         "statusLabel": "АКТИВЕН",
         "joinedDate": "—",
         "period": "—",
-        "organization": "TheNDay (участник)",
+        "organization": "Суньхуньсяй Inc.",
         "additionalOrgs": [],
-        "acceptedBy": "—",
+        "acceptedBy": "Folksy13_dll",
         "note": "Участник Суньхуньсяй. Основная рабочая сила компании.",
         "biography": "Является лудоманом и основной рабочей силой Суньхуньсяй Inc.",
         "socials": []
       }
     ],
+    "members": [],
     "partners": [
       {
         "id": "griffin_corp",
